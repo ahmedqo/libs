@@ -1,21 +1,28 @@
 const x = (function() {
     const Toaster = (function() {
-        function Toaster(message, type) {
+        function Toaster(message, type, time = 6000) {
             const text = (Array.isArray(message) ? message : [message]).join("<br />");
             const classes = type === "success" ? "border-emerald-500 bg-emerald-200 text-emerald-500" : "border-red-500 bg-red-200 text-red-500";
-            document.body.insertAdjacentHTML(
-                "beforeend",
-                `
-                <section class="toaster w-full fixed bottom-0 left-0 p-4 z-50">
-                    <div class="w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] text-center px-4 py-2 border mx-auto rounded-md text-base font-black ${classes}">
-                        ${text}
-                    </div>
-                </section>
-            `
-            );
+            const toaster = document.createElement("section");
+            toaster.className = "toaster w-full fixed bottom-0 translate-y-full left-0 p-4 z-50 transition-transform duration-500";
+            toaster.innerHTML =
+                '<div class="w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] text-center px-4 py-2 border mx-auto rounded-md text-base font-black ' +
+                classes +
+                '">' +
+                text +
+                "</div>";
+            document.body.insertAdjacentElement("beforeend", toaster);
             setTimeout(() => {
-                [...document.querySelectorAll(".toaster")].forEach((t) => t.remove());
-            }, 6000);
+                toaster.classList.remove("translate-y-full");
+            }, 100);
+            setTimeout(() => {
+                [...document.querySelectorAll(".toaster")].forEach((toast) => {
+                    toast.classList.add("translate-y-full");
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 1000);
+                });
+            }, time);
         }
 
         return Toaster;
