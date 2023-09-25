@@ -305,13 +305,13 @@ const x = (function() {
             const text = (Array.isArray(message) ? message : [message]).join("<br />");
             const classes = type === "success" ? "border-emerald-500 bg-emerald-200 text-emerald-500" : "border-red-500 bg-red-200 text-red-500";
             const toaster = document.createElement("section");
-            toaster.className = "pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 p-4 z-50 transition-transform duration-500";
+            toaster.className = "pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 z-50 transition-transform duration-500";
             toaster.innerHTML =
-                '<div class="pointer-events-auto w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] text-center px-4 py-2 border mx-auto rounded-md text-base font-black ' +
+                '<div class="container w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] mx-auto p-4"><div class="w-full pointer-events-auto text-center px-4 py-2 border rounded-md text-base font-black ' +
                 classes +
                 '">' +
                 text +
-                "</div>";
+                "</div></div>";
             document.body.insertAdjacentElement("beforeend", toaster);
             setTimeout(() => {
                 toaster.classList.remove("translate-y-full");
