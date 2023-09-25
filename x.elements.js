@@ -409,7 +409,7 @@ const x = (function() {
                         text: wrapper.querySelector("span"),
                     },
                     classes: {
-                        input: "x-switch-input bg-[#fcfcfc] border-[#d1d1d1] checked:bg-[#66baff] before:border-[#d1d1d1] checked:focus-within:outline-[#1d1d1d] focus-within:outline-[#66baff] relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-gray-50 before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
+                        input: "x-switch-input bg-[#f5f5f5] border-[#d1d1d1] checked:bg-[#66baff] before:border-[#d1d1d1] checked:focus-within:outline-[#1d1d1d] focus-within:outline-[#66baff] relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-gray-50 before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
                     },
                 };
                 current.className = current.opts.classes.input;
@@ -1769,7 +1769,7 @@ const x = (function() {
                 "x-datatable-download text-[#fcfcfc] bg-green-400 hover:bg-green-300 focus-within:bg-green-300 rounded-md w-[42px] h-[42px] flex items-center justify-center outline-none";
             XDataTablePagination.className = "x-datatable-pagination flex gap-2 items-center justify-center";
             XDataTablePaginationButton.className =
-                "x-datatable-pagination-button text-[#1d1d1d] bg-[#fcfcfc] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
+                "x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
             XDataTableEmpty.className = "x-datatable-empty text-[#1d1d1d] p-4 text-xl font-black uppercase text-center";
             XDataTableFilter.className = "x-datatable-filter lg:relative block w-[80px]";
             XDataTableEmpty.innerHTML = DataText.Empty;
@@ -1807,7 +1807,7 @@ const x = (function() {
             XDataTableSearch.type = "search";
             XDataTableSearch.placeholder = DataText.Search;
             XDataTable.innerHTML = `
-                <div class="x-datatable-content bg-[#fcfcfc] border-[#d1d1d1] border rounded-md w-full overflow-auto">
+                <div class="x-datatable-content bg-[#f5f5f5] border-[#d1d1d1] border rounded-md w-full overflow-auto">
                     <table class="x-datatable-table w-max min-w-full">
                         <thead class="x-datatable-head">
                             <tr class="x-datatable-head-row"></tr>
@@ -1844,7 +1844,7 @@ const x = (function() {
                         empty: XDataTableEmpty,
                     },
                     classes: {
-                        btn: "x-datatable-pagination-button text-[#1d1d1d] bg-[#fcfcfc] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
+                        btn: "x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
                         selected: "x-datatable-pagination-button x-datatable-pagination-selected text-[#fcfcfc] bg-[#66baff] border-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
                         filterSelected: "x-datatable-filter-item x-datatable-filter-selected text-[#fcfcfc] bg-[#66baff] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
                         filterBase: "x-datatable-filter-item text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
