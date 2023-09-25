@@ -1,12 +1,313 @@
 const x = (function() {
+    const Validate = (function() {
+        function $normalize(str) {
+            return str
+                .replace(/([a-z])([A-Z])/g, "$1 $2")
+                .replace(/_/g, " ")
+                .replace(/-/g, " ")
+                .toLowerCase();
+        }
+
+        function $factorize(rule, name, value) {
+            return (
+                rule &&
+                rule
+                .replace(/\{\{\s*name\s*\}\}/g, $normalize(name))
+                .replace(/\{\{\s*other\s*\}\}/g, value)
+                .trim()
+            );
+        }
+
+        $errors = {
+            required: "The {{name}} field is required",
+            email: "The {{name}} field must be a valid email address",
+            numeric: "The {{name}} field must be a numeric value",
+            integer: "The {{name}} field must be an integer",
+            float: "The {{name}} field must be a floating-point number",
+            alpha: "The {{name}} field must contain only alphabetic characters",
+            date: "The {{name}} field must be a valid date in the format yyyy-mm-dd",
+            url: "The {{name}} field must be a valid URL",
+            phone: "The {{name}} field must be a valid phone number",
+            zipcode: "The {{name}} field must be a valid zipcode",
+            strong: "The {{name}} field must have atleast {{other}} characters",
+            length: "The {{name}} field must have a length between {{other}}",
+            min: "The {{name}} field must be greater than or equal to {{other}}",
+            max: "The {{name}} field must be less than or equal to {{other}}",
+            regex: "The {{name}} field format is invalid",
+            size: "The {{name}} field size must be less than or equal to {{other}}",
+            type: "The {{name}} field must be of type {{other}}",
+        };
+
+        $rules = {
+            Required(input, value) {
+                if (["checkbox", "radio"].includes(input.type)) {
+                    const checkboxes = document.querySelectorAll(`[name="${input.name}"]`);
+                    return Array.from(checkboxes).some((checkbox) => checkbox.checked);
+                }
+                return value.trim() !== "";
+            },
+            Email(value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(value);
+            },
+            Numeric(value) {
+                return !isNaN(value);
+            },
+            Integer(value) {
+                return Number.isInteger(Number(value));
+            },
+            Float(value) {
+                return !isNaN(parseFloat(value));
+            },
+            Alpha(value) {
+                const alphaRegex = /^[A-Za-z]+$/;
+                return alphaRegex.test(value);
+            },
+            Date(value) {
+                const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                return dateRegex.test(value);
+            },
+            URL(value) {
+                const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+                return urlRegex.test(value);
+            },
+            Phone(value) {
+                const phoneNumberRegex = /^(?:\+*([0-9]{3}|0))(?:[ \-]?[0-9]){9}$/;
+                return phoneNumberRegex.test(value);
+            },
+            Length(value, size) {
+                const sizeParts = size
+                    .split(",")
+                    .map((e) => e.trim())
+                    .filter((e) => e.length);
+                const minLength = sizeParts[0] ? parseInt(sizeParts[0]) : null;
+                const maxLength = sizeParts[1] ? parseInt(sizeParts[1]) : null;
+                if (minLength !== null && value.length < minLength) {
+                    return false;
+                }
+                if (maxLength !== null && value.length > maxLength) {
+                    return false;
+                }
+                return true;
+            },
+            Strong(value, rules) {
+                const rulesParts = rules
+                    .split(",")
+                    .map((e) => e.trim())
+                    .filter((e) => e.length);
+                let isValid = true;
+                rulesParts.forEach((rule) => {
+                    rule = rule.trim();
+                    if (rule === "uppercase" && !/[A-Z]/.test(value)) {
+                        isValid = false;
+                    }
+                    if (rule === "lowercase" && !/[a-z]/.test(value)) {
+                        isValid = false;
+                    }
+                    if (rule === "numeric" && !/\d/.test(value)) {
+                        isValid = false;
+                    }
+                    if (rule === "special" && !/[!@#$%^&*]/.test(value)) {
+                        isValid = false;
+                    }
+                });
+                return isValid;
+            },
+            Min(value, size) {
+                return parseFloat(value) >= parseFloat(size);
+            },
+            Max(value, size) {
+                return parseFloat(value) <= parseFloat(size);
+            },
+            Regex(value, regex) {
+                const customRegex = new RegExp(regex);
+                return customRegex.test(value);
+            },
+            ZipCode(value) {
+                const postalCodeRegex = /^\d{5}$/;
+                return postalCodeRegex.test(value);
+            },
+            Size(input, size) {
+                const maxSize = parseInt(size);
+                return input.files[0].size <= maxSize;
+            },
+            Type(input, allowedTypes) {
+                const fileTypes = input.accept
+                    .split(",")
+                    .map((e) => e.trim())
+                    .filter((e) => e.length);
+                return fileTypes.some((type) => allowedTypes.includes(type));
+            },
+        };
+
+        function Validate(selector, { rules = {}, errors = {}, success = {}, onSuccess = () => {}, onFailure = () => {}, onExecute = null }) {
+            const form = document.querySelector(selector);
+            const detail = {};
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                let isValid = true;
+
+                for (const field in rules) {
+                    if (rules.hasOwnProperty(field)) {
+                        const _input = form.querySelector(`[name="${field}"]`);
+                        const _rules = typeof rules[field] === "string" ? rules[field].split("|") : rules[field];
+                        const _value = _input.value.trim();
+                        detail[field] = _input;
+                        let isSuccess = true;
+
+                        _rules.forEach((rule) => {
+                            const ruleParts = rule.split(":");
+                            const ruleName = ruleParts[0].toLowerCase();
+                            const ruleValue = ruleParts[1];
+                            const config = {
+                                error: $factorize(errors[field], field, ruleValue),
+                                default: $factorize($errors[ruleName], field, ruleValue),
+                            };
+
+                            switch (ruleName) {
+                                case "required":
+                                    if (!$rules.Required(_input, _value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "email":
+                                    if (!$rules.Email(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "numeric":
+                                    if (!$rules.Numeric(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "integer":
+                                    if (!$rules.Integer(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "float":
+                                    if (!$rules.Float(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "alpha":
+                                    if (!$rules.Alpha(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "date":
+                                    if (!$rules.Date(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "url":
+                                    if (!$rules.URL(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "phone":
+                                    if (!$rules.Phone(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "zipcode":
+                                    if (!$rules.ZipCode(_value)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "regex":
+                                    if (!$rules.Regex(_value, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "strong":
+                                    if (!$rules.Strong(_value, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "length":
+                                    if (!$rules.Length(_value, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "min":
+                                    if (!$rules.Min(_value, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "max":
+                                    if (!$rules.Max(_value, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "size":
+                                    if (!$rules.Size(_input, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                                case "type":
+                                    if (!$rules.Type(_input, ruleValue)) {
+                                        isSuccess = false;
+                                        isValid = false;
+                                    }
+                                    break;
+                            }
+
+                            if (!isSuccess)
+                                onFailure({
+                                    form: form,
+                                    field: _input,
+                                    name: field,
+                                    message: config.error || config.default,
+                                });
+                        });
+
+                        if (isSuccess) {
+                            const message = $factorize(success[field], field, "");
+                            onSuccess({
+                                form: form,
+                                field: _input,
+                                name: field,
+                                message: message,
+                            });
+                        }
+                    }
+                }
+
+                if (isValid) onExecute ? onExecute(e, detail) : form.submit();
+            });
+
+            return this;
+        }
+
+        return Validate;
+    })();
+
     const Toaster = (function() {
         function Toaster(message, type, time = 6000) {
             const text = (Array.isArray(message) ? message : [message]).join("<br />");
             const classes = type === "success" ? "border-emerald-500 bg-emerald-200 text-emerald-500" : "border-red-500 bg-red-200 text-red-500";
             const toaster = document.createElement("section");
-            toaster.className = "toaster w-full fixed bottom-0 translate-y-full left-0 p-4 z-50 transition-transform duration-500";
+            toaster.className = "pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 p-4 z-50 transition-transform duration-500";
             toaster.innerHTML =
-                '<div class="w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] text-center px-4 py-2 border mx-auto rounded-md text-base font-black ' +
+                '<div class="pointer-events-auto w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] text-center px-4 py-2 border mx-auto rounded-md text-base font-black ' +
                 classes +
                 '">' +
                 text +
@@ -23,6 +324,8 @@ const x = (function() {
                     }, 1000);
                 });
             }, time);
+
+            return this;
         }
 
         return Toaster;
@@ -63,6 +366,8 @@ const x = (function() {
                     };
                 });
             });
+
+            return this;
         }
 
         Print.opts = {
@@ -152,6 +457,7 @@ const x = (function() {
                 current.opts.els.label.insertAdjacentElement("afterbegin", current);
                 current.removeAttribute(Attributes.Selector);
             }
+
             return this;
         }
 
@@ -242,6 +548,7 @@ const x = (function() {
                 current.opts.els.container.insertAdjacentElement("afterbegin", current);
                 current.removeAttribute(Attributes.Selector);
             }
+
             return this;
         }
 
@@ -311,6 +618,7 @@ const x = (function() {
                 current.removeAttribute(Attributes.Selector);
                 current.removeAttribute(Attributes.Properties);
             }
+
             return this;
         }
 
@@ -772,6 +1080,7 @@ const x = (function() {
                 current.removeAttribute(Attributes.Selector);
                 $resize();
             }
+
             return this;
         }
 
@@ -1233,6 +1542,7 @@ const x = (function() {
                 current.removeAttribute(Attributes.Selector);
                 $resize();
             }
+
             return this;
         }
 
@@ -1691,6 +2001,7 @@ const x = (function() {
                 current.removeAttribute(Attributes.Selector);
                 $resize();
             }
+
             return this;
         }
 
@@ -1717,6 +2028,7 @@ const x = (function() {
     return {
         DatePicker,
         DataTable,
+        Validate,
         Password,
         Toaster,
         Switch,
