@@ -1567,6 +1567,40 @@ const x = (function() {
     })();
 
     const DataTable = (function() {
+        class $CSV {
+            constructor(table, opts) {
+                this.table = table;
+                this.head = opts.head;
+                this.remove = opts.remove;
+                this.rows = Array.from(this.table.getElementsByTagName("tr"));
+                if (!this.head) {
+                    this.rows = this.rows.filter((row) => row.parentElement.tagName !== "THEAD");
+                }
+            }
+
+            static parse(cell) {
+                let parsedValue = cell.textContent.trim().replace(/\s{2,}/g, " ");
+                parsedValue = parsedValue.replace(/"/g, `""`);
+                if (/[",\n]/.test(parsedValue)) {
+                    parsedValue = `"${parsedValue}"`;
+                }
+                return parsedValue;
+            }
+
+            convert() {
+                const lines = [];
+                for (const row of this.rows) {
+                    const values = [];
+                    for (let cell = 0; cell < [...row.cells].length; cell++) {
+                        if (this.remove.includes(cell)) continue;
+                        values.push($CSV.parse(row.cells[cell]));
+                    }
+                    lines.push(values.join(","));
+                }
+                return lines.join("\n");
+            }
+        }
+
         function $search(table) {
             if (table.hasAttribute(DataTable.opts.Attributes.Search) && table.attributes[DataTable.opts.Attributes.Search].value !== "false") {
                 table.opts.els.tools.appendChild(table.opts.els.search);
@@ -1713,40 +1747,6 @@ const x = (function() {
             }
         }
 
-        class $CSV {
-            constructor(table, opts) {
-                this.table = table;
-                this.head = opts.head;
-                this.remove = opts.remove;
-                this.rows = Array.from(this.table.getElementsByTagName("tr"));
-                if (!this.head) {
-                    this.rows = this.rows.filter((row) => row.parentElement.tagName !== "THEAD");
-                }
-            }
-
-            static parse(cell) {
-                let parsedValue = cell.textContent.trim().replace(/\s{2,}/g, " ");
-                parsedValue = parsedValue.replace(/"/g, `""`);
-                if (/[",\n]/.test(parsedValue)) {
-                    parsedValue = `"${parsedValue}"`;
-                }
-                return parsedValue;
-            }
-
-            convert() {
-                const lines = [];
-                for (const row of this.rows) {
-                    const values = [];
-                    for (let cell = 0; cell < [...row.cells].length; cell++) {
-                        if (this.remove.includes(cell)) continue;
-                        values.push($CSV.parse(row.cells[cell]));
-                    }
-                    lines.push(values.join(","));
-                }
-                return lines.join("\n");
-            }
-        }
-
         function DataTable() {
             const { Elements, Attributes, DataText } = DataTable.opts;
             var targets = document.querySelectorAll(`[${Attributes.Selector}]`);
@@ -1771,11 +1771,11 @@ const x = (function() {
             XDataTablePaginationButton.className =
                 "x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
             XDataTableEmpty.className = "x-datatable-empty text-[#1d1d1d] p-4 text-xl font-black uppercase text-center";
-            XDataTableFilter.className = "x-datatable-filter lg:relative block w-[80px]";
+            XDataTableFilter.className = "x-datatable-filter lg:relative block";
             XDataTableEmpty.innerHTML = DataText.Empty;
             XDataTableFilter.innerHTML = `
                 <x-datatable-filter-field-container tabindex="0" class="x-datatable-filter-field-container bg-[#f5f5f5] border-[#d1d1d1] focus-within:outline-[#66baff] flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
-                    <x-datatable-filter-field-content class="x-datatable-filter-field-content w-0 flex-1 overflow-auto no-scrollbar">
+                    <x-datatable-filter-field-content class="x-datatable-filter-field-content overflow-auto no-scrollbar">
                         <x-datatable-filter-field-text class="x-datatable-filter-field-text w-max flex items-center gap-2">10</x-datatable-filter-field-text>
                     </x-datatable-filter-field-content>
                     <x-datatable-filter-field-icon-wrapper class="x-datatable-filter-field-icon-wrapper pointer-events-none w-5 h-5 overflow-hidden flex items-center justify-center">
