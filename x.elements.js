@@ -332,40 +332,43 @@ const x = (function() {
     })();
 
     const Print = (function() {
-        function Print(trigger, target) {
-            const _target = document.querySelector(target);
-            const html =
-                '<!DOCTYPE html><html lang="' +
-                Print.opts.lang +
-                '"dir="' +
-                Print.opts.dir +
-                '"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible"content="IE=edge"/><meta name="viewport"content="width=device-width, initial-scale=1.0"/>' +
-                Print.opts.css.map((link) => `<link rel="stylesheet"href="${link}"/>`).join("") +
-                "<style>@page{size:" +
-                Print.opts.size +
-                ";margin:" +
-                Print.opts.margin +
-                ";}</style></head><body>" +
-                _target.innerHTML +
-                "</body></html>";
-            _target.remove();
-            [...document.querySelectorAll(trigger)].forEach((el) => {
-                el.addEventListener("click", (e) => {
-                    var iframe = document.createElement("iframe");
-                    iframe.style.display = "none";
-                    document.body.appendChild(iframe);
-                    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    iframeDoc.open();
-                    iframeDoc.write(html);
-                    iframeDoc.close();
-                    iframe.onload = function() {
-                        iframe.contentWindow.print();
-                        setTimeout(() => {
-                            document.body.removeChild(iframe);
-                        }, 1000);
-                    };
-                });
-            });
+        function Print(target, trigger, { clear = true, exec = false } = {}) {
+            const page = document.querySelector(target);
+
+            function $callable() {
+                var iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                document.body.appendChild(iframe);
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.open();
+                iframeDoc.write(
+                    '<!DOCTYPE html><html lang="' +
+                    Print.opts.lang +
+                    '"dir="' +
+                    Print.opts.dir +
+                    '"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible"content="IE=edge"/><meta name="viewport"content="width=device-width, initial-scale=1.0"/>' +
+                    Print.opts.css.map((link) => `<link rel="stylesheet"href="${link}"/>`).join("") +
+                    "<style>@page{size:" +
+                    Print.opts.size +
+                    ";margin:" +
+                    Print.opts.margin +
+                    ";}</style></head><body>" +
+                    page.innerHTML +
+                    "</body></html>"
+                );
+                iframeDoc.close();
+                iframe.onload = function() {
+                    iframe.contentWindow.print();
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 1000);
+                };
+            }
+
+            clear && page.remove();
+            exec && $callable();
+
+            document.querySelectorAll(trigger).forEach((el) => el.addEventListener("click", $callable));
 
             return this;
         }
@@ -426,6 +429,7 @@ const x = (function() {
                     current.dispatchEvent(
                         new CustomEvent("x-change", {
                             bubbles: true,
+                            detail: { event: e },
                         })
                     );
                 });
@@ -435,6 +439,7 @@ const x = (function() {
                     current.dispatchEvent(
                         new CustomEvent("x-change", {
                             bubbles: true,
+                            detail: { event: e },
                         })
                     );
                 });
@@ -525,6 +530,7 @@ const x = (function() {
                         current.dispatchEvent(
                             new CustomEvent("x-show", {
                                 bubbles: true,
+                                detail: { event: e },
                             })
                         );
                     } else {
@@ -532,6 +538,7 @@ const x = (function() {
                         current.dispatchEvent(
                             new CustomEvent("x-hide", {
                                 bubbles: true,
+                                detail: { event: e },
                             })
                         );
                     }
@@ -540,6 +547,7 @@ const x = (function() {
                     current.dispatchEvent(
                         new CustomEvent("x-toggle", {
                             bubbles: true,
+                            detail: { event: e },
                         })
                     );
                 });
@@ -644,6 +652,7 @@ const x = (function() {
                     current.dispatchEvent(
                         new CustomEvent("x-toggle", {
                             bubbles: true,
+                            detail: { event: e },
                         })
                     );
                 });
@@ -797,6 +806,7 @@ const x = (function() {
                             current.x.change({
                                 ...e,
                                 detail: {
+                                    event: e,
                                     target: clone,
                                     index: index,
                                 },
@@ -805,6 +815,7 @@ const x = (function() {
                             new CustomEvent("x-change", {
                                 bubbles: true,
                                 detail: {
+                                    event: e,
                                     target: clone,
                                     index: index,
                                 },
@@ -814,7 +825,7 @@ const x = (function() {
 
                     clone.addEventListener("click", $callable);
                     clone.addEventListener("keydown", (e) => {
-                        if (e.keyCode === 13) $callable();
+                        if (e.keyCode === 13) $callable(e);
                     });
                     select.opts.els.items.append(clone);
                 } else {
@@ -2038,9 +2049,192 @@ const x = (function() {
         return DataTable;
     })();
 
+    const Uploader = (function() {
+        function $update(uploader) {
+            uploader.opts.data.clearData();
+
+            [...uploader.opts.els.wrapper.children].forEach((c, i) => {
+                if (i > 0) c.remove();
+            });
+
+            if (uploader.hasAttribute(Uploader.opts.Attributes.Multiple)) {
+                uploader.opts.els.wrapper.classList.add("p-4");
+                uploader.opts.els.item.classList.remove(...uploader.opts.classes.item);
+                uploader.opts.els.trigger.classList.remove(...uploader.opts.classes.trigger);
+                uploader.opts.els.item.querySelector("svg").classList.remove(...uploader.opts.classes.svg);
+                uploader.opts.els.trigger.querySelector("svg").classList.remove(...uploader.opts.classes.svg);
+                uploader.opts.els.trigger.querySelector("x-uploader-item") && uploader.opts.els.trigger.querySelector("button").remove();
+            } else {
+                uploader.opts.els.wrapper.classList.remove("p-4");
+                uploader.opts.els.item.classList.add(...uploader.opts.classes.item);
+                uploader.opts.els.trigger.classList.add(...uploader.opts.classes.trigger);
+                uploader.opts.els.item.querySelector("svg").classList.add(...uploader.opts.classes.svg);
+                uploader.opts.els.trigger.querySelector("svg").classList.add(...uploader.opts.classes.svg);
+            }
+        }
+
+        function $remove(uploader, target) {
+            if (uploader.hasAttribute(Uploader.opts.Attributes.Multiple)) {
+                const index = Math.abs([...uploader.opts.els.wrapper.children].indexOf(target) - uploader.opts.data.items.length);
+                uploader.opts.data.items.remove(index);
+            } else {
+                uploader.opts.data.clearData();
+            }
+            uploader.files = uploader.opts.data.files;
+            target.remove();
+        }
+
+        function $create(uploader, src) {
+            const item = uploader.opts.els.item.cloneNode(true);
+
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                $remove(uploader, item);
+
+                if (!uploader.hasAttribute(Uploader.opts.Attributes.Multiple)) uploader.opts.els.file.click();
+
+                uploader.x.remove && uploader.x.remove(e);
+                uploader.dispatchEvent(
+                    new CustomEvent("x-remove", {
+                        bubbles: true,
+                        detail: { event: e },
+                    })
+                );
+            });
+
+            uploader.opts.els.trigger.insertAdjacentElement(uploader.hasAttribute(Uploader.opts.Attributes.Multiple) ? "afterend" : "beforeend", item);
+            item.querySelector(".x-uploader-image").src = src;
+        }
+
+        function Uploader() {
+            const { Elements, Attributes } = Uploader.opts;
+            var targets = document.querySelectorAll(`[${Attributes.Selector}]`);
+            if (Elements.length) targets = [...targets, ...Elements];
+            if (!targets.length) return this;
+
+            const XUploader = document.createElement("x-uploader"),
+                XUploaderItem = document.createElement("button");
+            XUploader.className = "x-uploader bg-[#f5f5f5] border-[#d1d1d1] p-4 rounded-md border grid grid-cols-2 grid-rows-1 lg:grid-cols-6 gap-4";
+            XUploaderItem.className =
+                "x-uploader-item w-full group aspect-square bg-[#d1d1d1] bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden";
+            XUploader.innerHTML = `
+                <x-uploader-trigger class="x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:bg-opacity-80 focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative">
+                    <svg class="block w-16 h-16 pointer-events-none" fill="currentcolor" viewBox="0 96 960 960">
+                        <path
+                            d="M480.009 721q-19.641 0-32.825-13.312Q434 694.375 434 676V365l-82 82q-13 12-31.511 12.5t-30.409-13.42Q276 432.867 276 413.933 276 395 290 380l158-158q6.167-4.909 14.532-8.955Q470.898 209 479.744 209q8.847 0 17.601 3.864Q506.1 216.727 512 222l159 160q14 13 13.5 32t-13.63 32.13q-12.137 13.101-31.003 12.485Q621 458 607 445l-82-80v311q0 18.375-12.675 31.688Q499.649 721 480.009 721ZM205 940q-36.05 0-63.525-26.897T114 847.5V706q0-18.8 13.56-32.4 13.559-13.6 32.3-13.6 20.14 0 32.64 13.6t12.5 32.297V848h549V705.897q0-18.697 12.86-32.297 12.859-13.6 32.5-13.6Q819 660 832 673.6t13 32.297V848q0 38.5-28 65.25T754 940H205Z" />
+                    </svg>
+                    <input type="file" accept="image/*" class="opacity-0 w-full h-full absolute inset-0 cursor-pointer" />
+                </x-uploader-trigger>
+            `;
+            XUploaderItem.innerHTML = `
+                <img class="x-uploader-image bg-[#f5f5f5] w-full h-full object-cover pointer-events-none transition-transform group-hover:scale-150" />
+                <div class="bg-[#1d1d1d] text-[#fcfcfc] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity w-full h-full absolute inset-0 bg-opacity-50 flex items-center justify-center">
+                    <svg class="block w-16 h-16 pointer-events-none" fill="currentcolor" viewBox="0 96 960 960">
+                        <path
+                            d="m480 647 88 88q10.733 12 28.367 12 17.633 0 30.459-11.826Q638 724 638 706.25T627 677l-88-89 88-90q11-11.733 11-29.367 0-17.633-11.174-28.459Q615 429 597.367 428.5 579.733 428 569 440l-89 89-87-89q-10.5-12-28.75-11.5t-30.424 11.674Q322 452 322 469.133q0 17.134 12 28.867l88 90-88 88q-11 12.5-11 29.75t10.826 29.424Q346 747 363.75 747T393 735l87-88ZM253 957q-35.725 0-63.863-27.138Q161 902.725 161 866V314h-11q-19 0-31.5-12.5T106 268q0-19 12.5-32t31.5-13h182q0-20 13-33.5t33-13.5h204q20 0 33.5 13.3T629 223h180q20 0 33 13t13 32q0 21-13 33.5T809 314h-11v552q0 36.725-27.638 63.862Q742.725 957 706 957H253Z" />
+                    </svg>
+                </div>
+            `;
+
+            for (let i = 0; i < targets.length; i++) {
+                const current = targets[i];
+                const wrapper = XUploader.cloneNode(true);
+                current.x = {
+                    change: null,
+                    remove: null,
+                };
+                current.opts = {
+                    els: {
+                        wrapper: wrapper,
+                        trigger: wrapper.querySelector("x-uploader-trigger"),
+                        file: wrapper.querySelector("input"),
+                        item: XUploaderItem,
+                    },
+                    classes: {
+                        trigger: ["col-span-2", "lg:col-span-6", "overflow-hidden"],
+                        item: ["!absolute", "inset-0"],
+                        svg: ["!w-20", "!h-20"],
+                    },
+                    data: new DataTransfer(),
+                };
+                current.classList.add("hidden");
+                current.opts.els.file.id = current.id + "_uploader";
+                current.opts.els.file.multiple = current.hasAttribute(Uploader.opts.Attributes.Multiple);
+
+                current.opts.els.file.addEventListener("change", (e) => {
+                    if (!current.hasAttribute(Uploader.opts.Attributes.Multiple)) {
+                        current.opts.els.wrapper.querySelectorAll("button").forEach((btn) => btn.remove());
+                        current.opts.data.clearData();
+                    }
+
+                    [...current.opts.els.file.files].forEach((file) => {
+                        $create(current, URL.createObjectURL(file));
+                        current.opts.data.items.add(file);
+                    });
+
+                    current.files = current.opts.data.files;
+                    current.opts.els.file.value = null;
+
+                    current.x.change && current.x.change(e);
+                    current.dispatchEvent(
+                        new CustomEvent("x-change", {
+                            bubbles: true,
+                            detail: { event: e },
+                        })
+                    );
+                });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const target = current.getAttribute(Uploader.opts.Attributes.Target);
+                    const files = document.querySelectorAll(target);
+                    if (current.hasAttribute(Uploader.opts.Attributes.Multiple)) {
+                        files.forEach((file) => {
+                            current.opts.els.wrapper.appendChild(file);
+                        });
+                    } else {
+                        files.forEach((file, i) => {
+                            if (i > 0) file.remove();
+                            else {
+                                current.opts.els.trigger.appendChild(file);
+                                file.classList.add(...current.opts.classes.item);
+                            }
+                        });
+                    }
+                });
+
+                new MutationObserver((mutationsList) => {
+                    for (const mutation of mutationsList) {
+                        if (mutation.type === "attributes") {
+                            $update(current);
+                        }
+                    }
+                }).observe(current, {
+                    attributes: true,
+                });
+
+                current.insertAdjacentElement("afterend", wrapper);
+                current.removeAttribute(Attributes.Selector);
+            }
+
+            return this;
+        }
+
+        Uploader.opts = {
+            Elements: [],
+            Attributes: {
+                Selector: "x-uploader",
+                Multiple: "multiple",
+                Target: "target",
+            },
+        };
+
+        return Uploader;
+    })();
+
     return {
         DatePicker,
         DataTable,
+        Uploader,
         Validate,
         Password,
         Toaster,
