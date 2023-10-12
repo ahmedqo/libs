@@ -563,6 +563,40 @@ const x = (function() {
     })();
 
     const Toggle = (function() {
+        function $loop(list) {
+            list.forEach((item) => {
+                const current = document.querySelector(item.selector);
+                if (!current) return;
+                const $callable = (function $callable() {
+                    items = [...current.querySelectorAll("a")];
+                    if (current.classList.contains(item.class)) items.forEach((itm) => (itm.tabIndex = "-1"));
+                    else items.forEach((itm) => itm.removeAttribute("tabindex"));
+                    return $callable;
+                })();
+                new MutationObserver((mutationsList) => {
+                    for (const mutation of mutationsList) {
+                        if (mutation.type === "attributes") {
+                            if (mutation.attributeName === "class") {
+                                $callable();
+                            }
+                        }
+                    }
+                }).observe(current, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                });
+            });
+        }
+
+        function $callable({ xs = [], sm = [], md = [], lg = [], xl = [] } = {}) {
+            $loop(xs);
+            if (matchMedia("(min-width: 640px)").matches) $loop(sm);
+            if (matchMedia("(min-width: 768px)").matches) $loop(md);
+            if (matchMedia("(min-width: 1024px)").matches) $loop(lg);
+            if (matchMedia("(min-width: 1280px)").matches) $loop(xl);
+        }
+
         function Toggle() {
             const { Elements, Attributes } = Toggle.opts;
             var targets = document.querySelectorAll(`[${Attributes.Selector}]`);
@@ -622,30 +656,9 @@ const x = (function() {
             return this;
         }
 
-        Toggle.blur = function(list = []) {
-            list.forEach((item) => {
-                const current = document.querySelector(item.selector);
-                if (!current) return;
-                const $callable = (function $callable() {
-                    items = [...current.querySelectorAll("a")];
-                    if (current.classList.contains(item.class)) items.forEach((itm) => (itm.tabIndex = "-1"));
-                    else items.forEach((itm) => itm.removeAttribute("tabindex"));
-                    return $callable;
-                })();
-                new MutationObserver((mutationsList) => {
-                    for (const mutation of mutationsList) {
-                        if (mutation.type === "attributes") {
-                            if (mutation.attributeName === "class") {
-                                $callable();
-                            }
-                        }
-                    }
-                }).observe(current, {
-                    childList: true,
-                    subtree: true,
-                    attributes: true,
-                });
-            });
+        Toggle.blur = function(obj) {
+            window.addEventListener("resize", () => $callable(obj));
+            $callable(obj);
         };
 
         Toggle.opts = {
