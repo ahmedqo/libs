@@ -684,7 +684,11 @@ const x = (function() {
 
     const Select = (function() {
         function $label(select) {
-            if (select.hasAttribute(Select.opts.Attributes.Placeholder) && select.attributes[Select.opts.Attributes.Placeholder].value.trim().length) {
+            if (
+                select.hasAttribute(Select.opts.Attributes.Placeholder) &&
+                select.attributes[Select.opts.Attributes.Placeholder].value.trim().length &&
+                select.attributes[Select.opts.Attributes.Placeholder].value.trim() !== "&nbsp;"
+            ) {
                 const text = select.attributes[Select.opts.Attributes.Placeholder].value.trim();
                 const fieldLabel = select.opts.els.fieldLabel;
                 const label = select.opts.els.label;
@@ -991,6 +995,7 @@ const x = (function() {
                 const current = targets[i];
                 const wrapper = XSelect.cloneNode(true);
                 current.selectedIndex = -1;
+
                 current.x = {
                     toggle: null,
                     search: null,
@@ -1100,6 +1105,11 @@ const x = (function() {
                     $disable(current);
                 };
 
+                const text = (current.attributes[Attributes.Placeholder] && current.attributes[Attributes.Placeholder].value.trim()) || "&nbsp;";
+                const fieldLabel = current.opts.els.fieldLabel;
+                fieldLabel.innerHTML = text;
+                if (current.opts.els.fieldText.innerHTML.trim() === "") current.opts.els.fieldText.insertAdjacentElement("afterbegin", fieldLabel);
+
                 current.insertAdjacentElement("afterend", wrapper);
                 current.removeAttribute(Attributes.Selector);
                 $resize();
@@ -1128,7 +1138,11 @@ const x = (function() {
 
     const DatePicker = (function() {
         function $label(date) {
-            if (date.hasAttribute(DatePicker.opts.Attributes.Placeholder) && date.attributes[DatePicker.opts.Attributes.Placeholder].value.trim().length) {
+            if (
+                date.hasAttribute(DatePicker.opts.Attributes.Placeholder) &&
+                date.attributes[DatePicker.opts.Attributes.Placeholder].value.trim().length &&
+                date.attributes[DatePicker.opts.Attributes.Placeholder].value.trim() !== "&nbsp;"
+            ) {
                 const text = date.attributes[DatePicker.opts.Attributes.Placeholder].value.trim();
                 const fieldLabel = date.opts.els.fieldLabel;
                 const label = date.opts.els.label;
@@ -1561,6 +1575,11 @@ const x = (function() {
                     const date = new Date(value);
                     if (!isNaN(date) && date.toString() !== "Invalid Date") current.setAttribute("value", $format(date));
                 }
+
+                const text = (current.attributes[Attributes.Placeholder] && current.attributes[Attributes.Placeholder].value.trim()) || "&nbsp;";
+                const fieldLabel = current.opts.els.fieldLabel;
+                fieldLabel.innerHTML = text;
+                if (current.opts.els.fieldText.innerHTML.trim() === "") current.opts.els.fieldText.insertAdjacentElement("afterbegin", fieldLabel);
 
                 current.insertAdjacentElement("afterend", wrapper);
                 current.removeAttribute(Attributes.Selector);
