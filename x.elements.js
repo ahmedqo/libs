@@ -568,7 +568,7 @@ const x = (function() {
                 const current = document.querySelector(item.selector);
                 if (!current) return;
                 const $callable = (function $callable() {
-                    items = [...current.querySelectorAll("a")];
+                    items = current.querySelectorAll("a, button, input, select, textarea");
                     if (current.classList.contains(item.class)) items.forEach((itm) => (itm.tabIndex = "-1"));
                     else items.forEach((itm) => itm.removeAttribute("tabindex"));
                     return $callable;
