@@ -2078,19 +2078,19 @@ const x = (function() {
 
             if (uploader.hasAttribute(Uploader.opts.Attributes.Multiple)) {
                 uploader.opts.els.file.multiple = true;
-                uploader.opts.els.wrapper.classList.add("p-4");
-                uploader.opts.els.item.classList.remove(...uploader.opts.classes.item);
-                uploader.opts.els.trigger.classList.remove(...uploader.opts.classes.trigger);
-                uploader.opts.els.item.querySelector("svg").classList.remove(...uploader.opts.classes.svg);
-                uploader.opts.els.trigger.querySelector("svg").classList.remove(...uploader.opts.classes.svg);
+                uploader.opts.els.wrapper.className = uploader.opts.classes.multiple.wrapper;
+                uploader.opts.els.item.className = uploader.opts.classes.multiple.item;
+                uploader.opts.els.trigger.className = uploader.opts.classes.multiple.trigger;
+                uploader.opts.els.item.querySelector("svg").className.baseVal = uploader.opts.classes.multiple.svg;
+                uploader.opts.els.trigger.querySelector("svg").className.baseVal = uploader.opts.classes.multiple.svg;
                 uploader.opts.els.trigger.querySelector("x-uploader-item") && uploader.opts.els.trigger.querySelector("button").remove();
             } else {
                 uploader.opts.els.file.multiple = false;
-                uploader.opts.els.wrapper.classList.remove("p-4");
-                uploader.opts.els.item.classList.add(...uploader.opts.classes.item);
-                uploader.opts.els.trigger.classList.add(...uploader.opts.classes.trigger);
-                uploader.opts.els.item.querySelector("svg").classList.add(...uploader.opts.classes.svg);
-                uploader.opts.els.trigger.querySelector("svg").classList.add(...uploader.opts.classes.svg);
+                uploader.opts.els.wrapper.className = uploader.opts.classes.single.wrapper;
+                uploader.opts.els.item.className = uploader.opts.classes.single.item;
+                uploader.opts.els.trigger.className = uploader.opts.classes.single.trigger;
+                uploader.opts.els.item.querySelector("svg").className.baseVal = uploader.opts.classes.single.svg;
+                uploader.opts.els.trigger.querySelector("svg").className.baseVal = uploader.opts.classes.single.svg;
             }
         }
 
@@ -2135,13 +2135,9 @@ const x = (function() {
 
             const XUploader = document.createElement("x-uploader"),
                 XUploaderItem = document.createElement("button");
-            XUploader.className =
-                "x-element x-uploader bg-[#f5f5f5] border-[#d1d1d1] p-4 rounded-md border grid grid-cols-2 grid-rows-1 lg:grid-cols-6 gap-4";
-            XUploaderItem.className =
-                "x-element x-uploader-item w-full group aspect-square bg-[#d1d1d1] bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden";
             XUploader.innerHTML = `
-                <x-uploader-trigger class="x-element x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative">
-                    <svg class="x-element block w-16 h-16 pointer-events-none" fill="currentcolor" viewBox="0 96 960 960">
+                <x-uploader-trigger>
+                    <svg fill="currentcolor" viewBox="0 96 960 960">
                         <path
                             d="M480.009 721q-19.641 0-32.825-13.312Q434 694.375 434 676V365l-82 82q-13 12-31.511 12.5t-30.409-13.42Q276 432.867 276 413.933 276 395 290 380l158-158q6.167-4.909 14.532-8.955Q470.898 209 479.744 209q8.847 0 17.601 3.864Q506.1 216.727 512 222l159 160q14 13 13.5 32t-13.63 32.13q-12.137 13.101-31.003 12.485Q621 458 607 445l-82-80v311q0 18.375-12.675 31.688Q499.649 721 480.009 721ZM205 940q-36.05 0-63.525-26.897T114 847.5V706q0-18.8 13.56-32.4 13.559-13.6 32.3-13.6 20.14 0 32.64 13.6t12.5 32.297V848h549V705.897q0-18.697 12.86-32.297 12.859-13.6 32.5-13.6Q819 660 832 673.6t13 32.297V848q0 38.5-28 65.25T754 940H205Z" />
                     </svg>
@@ -2149,9 +2145,9 @@ const x = (function() {
                 </x-uploader-trigger>
             `;
             XUploaderItem.innerHTML = `
-                <img class="x-element x-uploader-image bg-[#f5f5f5] w-full h-full object-cover pointer-events-none transition-transform group-hover:scale-150" />
+                <img class="x-element x-uploader-image w-full h-full object-contain pointer-events-none transition-transform group-hover:scale-150" />
                 <div class="x-element bg-[#1d1d1d] text-[#fcfcfc] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity w-full h-full absolute inset-0 bg-opacity-50 flex items-center justify-center">
-                    <svg class="x-element block w-16 h-16 pointer-events-none" fill="currentcolor" viewBox="0 96 960 960">
+                    <svg fill="currentcolor" viewBox="0 96 960 960">
                         <path
                             d="m480 647 88 88q10.733 12 28.367 12 17.633 0 30.459-11.826Q638 724 638 706.25T627 677l-88-89 88-90q11-11.733 11-29.367 0-17.633-11.174-28.459Q615 429 597.367 428.5 579.733 428 569 440l-89 89-87-89q-10.5-12-28.75-11.5t-30.424 11.674Q322 452 322 469.133q0 17.134 12 28.867l88 90-88 88q-11 12.5-11 29.75t10.826 29.424Q346 747 363.75 747T393 735l87-88ZM253 957q-35.725 0-63.863-27.138Q161 902.725 161 866V314h-11q-19 0-31.5-12.5T106 268q0-19 12.5-32t31.5-13h182q0-20 13-33.5t33-13.5h204q20 0 33.5 13.3T629 223h180q20 0 33 13t13 32q0 21-13 33.5T809 314h-11v552q0 36.725-27.638 63.862Q742.725 957 706 957H253Z" />
                     </svg>
@@ -2173,9 +2169,19 @@ const x = (function() {
                         item: XUploaderItem,
                     },
                     classes: {
-                        trigger: ["col-span-2", "lg:col-span-6", "overflow-hidden", "!bg-transparent"],
-                        item: ["!absolute", "inset-0"],
-                        svg: ["!w-20", "!h-20"],
+                        multiple: {
+                            wrapper: "x-element x-uploader bg-[#f5f5f5] border-[#d1d1d1] p-2 rounded-md border grid grid-cols-2 grid-rows-1 lg:grid-cols-6 gap-2",
+                            trigger: "x-element x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
+                            item: "x-element x-uploader-item w-full group aspect-square bg-[#d1d1d1] bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden",
+                            svg: "x-element block w-16 h-16 pointer-events-none",
+                        },
+                        single: {
+                            wrapper: "x-element x-uploader bg-[#f5f5f5] border-[#d1d1d1] rounded-md border",
+                            trigger: "x-element x-uploader-trigger text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
+                            item: "x-element x-uploader-item w-full group aspect-square bg-[#f5f5f5] rounded-md flex items-center justify-center cursor-pointer overflow-hidden absolute inset-0",
+                            svg: "x-element block w-20 h-20 pointer-events-none",
+                        },
+                        css: ["absolute", "inset-0"],
                     },
                     data: new DataTransfer(),
                 };
@@ -2184,11 +2190,6 @@ const x = (function() {
                 current.opts.els.file.multiple = current.hasAttribute(Uploader.opts.Attributes.Multiple);
 
                 current.opts.els.file.addEventListener("change", (e) => {
-                    if (!current.hasAttribute(Uploader.opts.Attributes.Multiple)) {
-                        current.opts.els.wrapper.querySelectorAll("button").forEach((btn) => btn.remove());
-                        current.opts.data.clearData();
-                    }
-
                     [...current.opts.els.file.files].forEach((file) => {
                         $create(current, URL.createObjectURL(file));
                         current.opts.data.items.add(file);
@@ -2218,7 +2219,7 @@ const x = (function() {
                             if (i > 0) file.remove();
                             else {
                                 current.opts.els.trigger.appendChild(file);
-                                file.classList.add(...current.opts.classes.item);
+                                file.classList.add(...current.opts.classes.css);
                             }
                         });
                     }

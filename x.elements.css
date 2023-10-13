@@ -1004,11 +1004,11 @@ content: var(--x-content);
 .x-element.hover\:bg-opacity-50:hover {
     --x-bg-opacity: 0.5;
 }
-.x-element.hover\:bg-opacity-80:hover {
-    --x-bg-opacity: 0.8;
+.x-element.hover\:bg-opacity-100:hover {
+    --x-bg-opacity: 10;
 }
-.x-element.focus\:bg-opacity-80:focus {
-    --x-bg-opacity: 0.8;
+.x-element.focus\:bg-opacity-100:focus {
+    --x-bg-opacity: 10;
 }
 .x-element.focus\:\!bg-\[\#d1d1d1\]:focus {
     --x-bg-opacity: 1;
