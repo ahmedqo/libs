@@ -658,6 +658,10 @@ img.x-element {
     background-color: transparent;
 }
 
+.x-element.\!bg-transparent {
+    background-color: transparent;
+}
+
 .x-element.bg-opacity-40 {
     --x-bg-opacity: 0.4;
 }
@@ -989,6 +993,10 @@ content: var(--x-content);
     --x-bg-opacity: 1;
     background-color: rgb(209 209 209 / var(--x-bg-opacity));
 }
+.x-element.hover\:\!bg-\[\#d1d1d1\]:hover {
+    --x-bg-opacity: 1;
+    background-color: rgb(209 209 209 / var(--x-bg-opacity));
+}
 .x-element.hover\:bg-green-300:hover {
     --x-bg-opacity: 1;
     background-color: rgb(134 239 172 / var(--x-bg-opacity));
@@ -1001,6 +1009,10 @@ content: var(--x-content);
 }
 .x-element.focus\:bg-opacity-80:focus {
     --x-bg-opacity: 0.8;
+}
+.x-element.focus\:\!bg-\[\#d1d1d1\]:focus {
+    --x-bg-opacity: 1;
+    background-color: rgb(209 209 209 / var(--x-bg-opacity));
 }
 .x-element.group:hover .group-hover\:scale-150 {
     --x-scale-x: 1.5;

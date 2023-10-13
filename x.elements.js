@@ -2140,7 +2140,7 @@ const x = (function() {
             XUploaderItem.className =
                 "x-element x-uploader-item w-full group aspect-square bg-[#d1d1d1] bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden";
             XUploader.innerHTML = `
-                <x-uploader-trigger class="x-element x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:bg-opacity-80 focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative">
+                <x-uploader-trigger class="x-element x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative">
                     <svg class="x-element block w-16 h-16 pointer-events-none" fill="currentcolor" viewBox="0 96 960 960">
                         <path
                             d="M480.009 721q-19.641 0-32.825-13.312Q434 694.375 434 676V365l-82 82q-13 12-31.511 12.5t-30.409-13.42Q276 432.867 276 413.933 276 395 290 380l158-158q6.167-4.909 14.532-8.955Q470.898 209 479.744 209q8.847 0 17.601 3.864Q506.1 216.727 512 222l159 160q14 13 13.5 32t-13.63 32.13q-12.137 13.101-31.003 12.485Q621 458 607 445l-82-80v311q0 18.375-12.675 31.688Q499.649 721 480.009 721ZM205 940q-36.05 0-63.525-26.897T114 847.5V706q0-18.8 13.56-32.4 13.559-13.6 32.3-13.6 20.14 0 32.64 13.6t12.5 32.297V848h549V705.897q0-18.697 12.86-32.297 12.859-13.6 32.5-13.6Q819 660 832 673.6t13 32.297V848q0 38.5-28 65.25T754 940H205Z" />
@@ -2173,7 +2173,7 @@ const x = (function() {
                         item: XUploaderItem,
                     },
                     classes: {
-                        trigger: ["col-span-2", "lg:col-span-6", "overflow-hidden"],
+                        trigger: ["col-span-2", "lg:col-span-6", "overflow-hidden", "!bg-transparent"],
                         item: ["!absolute", "inset-0"],
                         svg: ["!w-20", "!h-20"],
                     },
