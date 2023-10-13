@@ -797,7 +797,7 @@ const x = (function() {
                         clone.removeAttribute("tabindex");
                     }
 
-                    const $callable = () => {
+                    const $callable = (e) => {
                         $choose(select, clone, option.target, index);
 
                         if (!select.hasAttribute(Select.opts.Attributes.Multiple) ||
@@ -1028,7 +1028,7 @@ const x = (function() {
                     mode: "closed",
                     name: current.name,
                 };
-                current.classList.add("hidden");
+                current.classList.add("x-element", "hidden");
 
                 const $resize = () => {
                     if (matchMedia("((min-width: 1024px))").matches) current.opts.els.wrapper.appendChild(current.opts.els.modal);
@@ -1462,7 +1462,7 @@ const x = (function() {
                     disabledDays: getArray(current.getAttribute(Attributes.DisabledDays)),
                     mode: "closed",
                 };
-                current.classList.add("hidden");
+                current.classList.add("x-element", "hidden");
 
                 const $resize = () => {
                     if (matchMedia("((min-width: 1024px))").matches) current.opts.els.wrapper.appendChild(current.opts.els.modal);
@@ -1903,7 +1903,7 @@ const x = (function() {
                 current.opts.els.filterModal = current.opts.els.filter.querySelector(".x-datatable-filter-modal");
                 current.opts.els.filterContent = current.opts.els.filter.querySelector(".x-datatable-filter-content");
                 current.opts.els.filterItems = current.opts.els.filter.querySelectorAll(".x-datatable-filter-item");
-                current.classList.add("hidden");
+                current.classList.add("x-element", "hidden");
 
                 [...current.tHead.querySelector("tr").children].forEach((td) => {
                     td.className = current.opts.classes.headCol + " " + td.className;
@@ -2072,11 +2072,12 @@ const x = (function() {
         function $update(uploader) {
             uploader.opts.data.clearData();
 
-            [...uploader.opts.els.wrapper.children].forEach((c, i) => {
-                if (i > 0) c.remove();
+            uploader.opts.els.wrapper.querySelectorAll(".x-uploader-item").forEach((c, i) => {
+                c.remove();
             });
 
             if (uploader.hasAttribute(Uploader.opts.Attributes.Multiple)) {
+                uploader.opts.els.file.multiple = true;
                 uploader.opts.els.wrapper.classList.add("p-4");
                 uploader.opts.els.item.classList.remove(...uploader.opts.classes.item);
                 uploader.opts.els.trigger.classList.remove(...uploader.opts.classes.trigger);
@@ -2084,6 +2085,7 @@ const x = (function() {
                 uploader.opts.els.trigger.querySelector("svg").classList.remove(...uploader.opts.classes.svg);
                 uploader.opts.els.trigger.querySelector("x-uploader-item") && uploader.opts.els.trigger.querySelector("button").remove();
             } else {
+                uploader.opts.els.file.multiple = false;
                 uploader.opts.els.wrapper.classList.remove("p-4");
                 uploader.opts.els.item.classList.add(...uploader.opts.classes.item);
                 uploader.opts.els.trigger.classList.add(...uploader.opts.classes.trigger);
@@ -2177,7 +2179,7 @@ const x = (function() {
                     },
                     data: new DataTransfer(),
                 };
-                current.classList.add("hidden");
+                current.classList.add("x-element", "hidden");
                 current.opts.els.file.id = current.id + "_uploader";
                 current.opts.els.file.multiple = current.hasAttribute(Uploader.opts.Attributes.Multiple);
 
