@@ -303,7 +303,7 @@ const x = (function() {
     const Toaster = (function() {
         function Toaster(message, type, time = 6000) {
             const text = (Array.isArray(message) ? message : [message]).join("<br />");
-            const classes = type === "success" ? "border-emerald-500 bg-emerald-200 text-emerald-500" : "border-red-500 bg-red-200 text-red-500";
+            const classes = type === "success" ? "border-[#10b981] bg-[#a7f3d0] text-[#10b981]" : "border-[#ef4444] bg-[#fecaca] text-[#ef4444]";
             const toaster = document.createElement("section");
             toaster.className = "pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 z-50 transition-transform duration-500";
             toaster.innerHTML =
@@ -412,7 +412,7 @@ const x = (function() {
                         text: wrapper.querySelector("span"),
                     },
                     classes: {
-                        input: "x-element x-switch-input bg-[#f5f5f5] border-[#d1d1d1] checked:bg-[#66baff] before:border-[#d1d1d1] checked:focus-within:outline-[#1d1d1d] focus-within:outline-[#66baff] relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-gray-50 before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
+                        input: "x-element x-switch-input bg-[#f5f5f5] border-[#d1d1d1] checked:bg-[#66baff] before:border-[#d1d1d1] checked:focus-within:outline-[#1d1d1d] focus-within:outline-[#66baff] relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-[#f9fafb] before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
                     },
                 };
                 current.className = current.opts.classes.input;
@@ -1809,7 +1809,7 @@ const x = (function() {
             XDataTableSearch.className =
                 "x-element x-datatable-search bg-[#f5f5f5] text-[#1d1d1d] border-[#d1d1d1] focus-within:outline-[#66baff] p-2 w-0 flex-1 lg:flex-none lg:w-80 text-base border rounded-md me-auto focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2";
             XDataTableDownload.className =
-                "x-element x-datatable-download text-[#fcfcfc] bg-green-400 hover:bg-green-300 focus-within:bg-green-300 rounded-md w-[42px] h-[42px] flex items-center justify-center outline-none";
+                "x-element x-datatable-download text-[#fcfcfc] border-[#27b380] bg-[#ef4444] hover:bg-[#86efac] focus-within:bg-[#86efac] border rounded-md w-[42px] h-[42px] flex items-center justify-center outline-none";
             XDataTablePagination.className = "x-element x-datatable-pagination flex gap-2 items-center justify-center";
             XDataTablePaginationButton.className =
                 "x-element x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
@@ -2219,6 +2219,9 @@ const x = (function() {
                             if (i > 0) file.remove();
                             else {
                                 current.opts.els.trigger.appendChild(file);
+                                file.addEventListener("click", (e) => {
+                                    current.opts.els.file.click();
+                                });
                                 file.classList.add(...current.opts.classes.css);
                             }
                         });

@@ -599,12 +599,17 @@ img.x-element {
     border-color: rgb(209 209 209 / var(--x-border-opacity));
 }
 
-.x-element.border-emerald-500 {
+.x-element.border-\[\#27b380\] {
+    --x-border-opacity: 1;
+    border-color: rgb(39 179 128 / var(--x-border-opacity));
+}
+
+.x-element.border-\[\#10b981\] {
     --x-border-opacity: 1;
     border-color: rgb(16 185 129 / var(--x-border-opacity));
 }
 
-.x-element.border-red-500 {
+.x-element.border-\[\#ef4444\] {
     --x-border-opacity: 1;
     border-color: rgb(239 68 68 / var(--x-border-opacity));
 }
@@ -639,17 +644,17 @@ img.x-element {
     background-color: rgb(252 252 252 / var(--x-bg-opacity));
 }
 
-.x-element.bg-emerald-200 {
+.x-element.bg-\[\#a7f3d0\] {
     --x-bg-opacity: 1;
     background-color: rgb(167 243 208 / var(--x-bg-opacity));
 }
 
-.x-element.bg-green-400 {
+.x-element.bg-\[\#ef4444\] {
     --x-bg-opacity: 1;
     background-color: rgb(74 222 128 / var(--x-bg-opacity));
 }
 
-.x-element.bg-red-200 {
+.x-element.bg-\[\#fecaca\] {
     --x-bg-opacity: 1;
     background-color: rgb(254 202 202 / var(--x-bg-opacity));
 }
@@ -774,12 +779,12 @@ img.x-element {
     color: rgb(252 252 252 / var(--x-text-opacity));
 }
 
-.x-element.text-emerald-500 {
+.x-element.text-\[\#10b981\] {
     --x-text-opacity: 1;
     color: rgb(16 185 129 / var(--x-text-opacity));
 }
 
-.x-element.text-red-500 {
+.x-element.text-\[\#ef4444\] {
     --x-text-opacity: 1;
     color: rgb(239 68 68 / var(--x-text-opacity));
 }
@@ -914,7 +919,7 @@ img.x-element {
     border-color: rgb(209 209 209 / var(--x-border-opacity));
 }
 
-.x-element.before\:bg-gray-50::before {
+.x-element.before\:bg-\[\#f9fafb\]::before {
     content: var(--x-content);
     --x-bg-opacity: 1;
     background-color: rgb(249 250 251 / var(--x-bg-opacity));
@@ -957,7 +962,7 @@ content: var(--x-content);
     --x-bg-opacity: 1;
     background-color: rgb(209 209 209 / var(--x-bg-opacity));
 }
-.x-element.focus-within\:bg-green-300:focus-within {
+.x-element.focus-within\:bg-\[\#86efac\]:focus-within {
     --x-bg-opacity: 1;
     background-color: rgb(134 239 172 / var(--x-bg-opacity));
 }
@@ -997,7 +1002,7 @@ content: var(--x-content);
     --x-bg-opacity: 1;
     background-color: rgb(209 209 209 / var(--x-bg-opacity));
 }
-.x-element.hover\:bg-green-300:hover {
+.x-element.hover\:bg-\[\#86efac\]:hover {
     --x-bg-opacity: 1;
     background-color: rgb(134 239 172 / var(--x-bg-opacity));
 }
