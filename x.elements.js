@@ -303,11 +303,14 @@ const x = (function() {
     const Toaster = (function() {
         function Toaster(message, type, time = 6000) {
             const text = (Array.isArray(message) ? message : [message]).join("<br />");
-            const classes = type === "success" ? "border-[#10b981] bg-[#a7f3d0] text-[#10b981]" : "border-[#ef4444] bg-[#fecaca] text-[#ef4444]";
+            const classes =
+                type === "success" ?
+                "border-green-dark-color bg-green-light-color text-green-dark-color" :
+                "border-red-dark-color bg-red-light-color text-red-dark-color";
             const toaster = document.createElement("section");
-            toaster.className = "pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 z-50 transition-transform duration-500";
+            toaster.className = "x-element pointer-events-none toaster w-full fixed bottom-0 translate-y-full left-0 z-50 transition-transform duration-500";
             toaster.innerHTML =
-                '<div class="container w-full lg:w-max lg:max-w-[30%] lg:min-w-[20%] mx-auto p-4"><div class="w-full pointer-events-auto text-center px-4 py-2 border rounded-md text-base font-black ' +
+                '<div class="x-element container w-full lg:w-max lg:max-w-[40%] lg:min-w-[30%] mx-auto p-4"><div class="x-element w-full pointer-events-auto text-center px-4 py-2 border rounded-md text-base font-black ' +
                 classes +
                 '">' +
                 text +
@@ -395,7 +398,7 @@ const x = (function() {
             XSwitch.className = "x-element x-switch relative block";
             XSwitch.innerHTML = `
                 <label class="x-element x-switch-content w-max flex items-center gap-2">
-                    <span class="x-element x-switch-text text-[#1d1d1d] block text-base"></span>
+                    <span class="x-element x-switch-text text-black-color block text-base"></span>
                 </label>
             `;
 
@@ -412,7 +415,7 @@ const x = (function() {
                         text: wrapper.querySelector("span"),
                     },
                     classes: {
-                        input: "x-element x-switch-input bg-[#f5f5f5] border-[#d1d1d1] checked:bg-[#66baff] before:border-[#d1d1d1] checked:focus-within:outline-[#1d1d1d] focus-within:outline-[#66baff] relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-[#f9fafb] before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
+                        input: "x-element x-switch-input bg-light-color border-gray-color checked:bg-blue-color before:border-gray-color checked:focus-within:outline-black-color focus-within:outline-blue-color relative w-12 h-6 border rounded-full cursor-pointer transition-colors ease-in-out duration-200 appearance-none focus-within:outline focus-within:outline-2 focus-within:outline-offset-[0] before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 rtl:before:left-auto rtl:before:-right-px before:-left-px before:block before:w-6 before:h-6 before:bg-white-color before:border rtl:checked:before:-translate-x-full checked:before:translate-x-full before:rounded-full before:transform before:transition before:ease-in-out before:duration-200",
                     },
                 };
                 current.className = current.opts.classes.input;
@@ -487,9 +490,9 @@ const x = (function() {
             const XPassword = document.createElement("x-password");
             XPassword.className = "x-element x-password relative block";
             XPassword.innerHTML = `
-                <x-password-container class="x-element x-password-container bg-[#f5f5f5] border-[#d1d1d1] focus-within:outline-[#66baff] flex flex-wrap items-center gap-2 p-2 rounded-md cursor-text border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
-                    <button class="x-element x-password-trigger focus-within:outline-[#66baff] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 rounded-sm">
-                        <svg class="x-element x-password-icon text-[#1d1d1d] block pointer-events-none w-5 h-5" fill="currentColor" viewBox="0 -960 960 960">
+                <x-password-container class="x-element x-password-container bg-light-color border-gray-color focus-within:outline-blue-color flex flex-wrap items-center gap-2 p-2 rounded-md cursor-text border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
+                    <button class="x-element x-password-trigger focus-within:outline-blue-color focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 rounded-sm">
+                        <svg class="x-element x-password-icon text-black-color block pointer-events-none w-5 h-5" fill="currentColor" viewBox="0 -960 960 960">
                             <path class="x-element x-pasword-icon-on" d="M480.294-333Q550-333 598.5-381.794t48.5-118.5Q647-570 598.206-618.5t-118.5-48.5Q410-667 361.5-618.206t-48.5 118.5Q313-430 361.794-381.5t118.5 48.5Zm-.412-71q-39.465 0-67.674-28.326Q384-460.652 384-500.118q0-39.465 28.326-67.674Q440.652-596 480.118-596q39.465 0 67.674 28.326Q576-539.348 576-499.882q0 39.465-28.326 67.674Q519.348-404 479.882-404ZM480-180q-143.61 0-260.805-79T37.145-467.077q-3.945-5.987-6.045-14.901-2.1-8.915-2.1-17.824 0-8.909 2.1-18.178 2.1-9.27 6.045-16.943 64.834-126.779 182.04-205.928Q336.39-820 480-820t260.815 79.149q117.206 79.149 182.04 205.928 3.945 7.673 6.045 16.588 2.1 8.914 2.1 17.823t-2.1 18.179q-2.1 9.269-6.045 15.256Q858-338 740.805-259 623.61-180 480-180Z"/>
                             <path class="x-element x-pasword-icon-off hidden" d="M780-286 632-434q8-12 11.5-31t3.5-35q0-70-48.5-118.5T480-667q-17 0-33 3.5T414-652L286-781q34-14 90.5-26.5T485-820q136 0 255.5 75.5T925-535q3 8 4.5 17t1.5 18q0 9-1.5 18.5T924-466q-27 56-64 100.5T780-286Zm2 200L653-211q-35 14-79.5 22.5T480-180q-141 0-259.5-75.5T36-467q-4-7-5.5-15.5T29-500q0-9 2-19t5-17q21-43 53.5-85t73.5-82l-97-98q-10-8-10-22.5T66-848q8-9 23-9t25 9l716 716q9 10 7.5 23.5T830-87q-11 11-25.5 11T782-86ZM480-333q12 0 24.5-3t20.5-6L320-545q-2 10-4.5 22t-2.5 23q0 71 49 119t118 48Zm82-172-72-72q27-18 59 7t13 65Z"/>
                         </svg>
@@ -958,32 +961,32 @@ const x = (function() {
                 XSelectItem = document.createElement("x-select-item"),
                 XSelectSearch = document.createElement("input");
             XSelect.className = "x-element x-select lg:relative block";
-            XSelectFieldLabel.className = "x-element x-select-field-label text-[#9ca3af] text-base";
-            XSelectFieldSingle.className = "x-element x-select-field-single text-[#1d1d1d] text-base";
-            XSelectFieldMultiple.className = "x-element x-select-field-multiple block w-max bg-[#66baff] text-[#fcfcfc] text-xs p-1 rounded-sm";
-            XSelectTools.className = "x-element x-select-tools border-[#d1d1d1] flex flex-col border-b p-2 gap-2";
-            XSelectLabel.className = "x-element x-select-label text-[#1d1d1d] text-base text-center font-black leading-[1] lg:hidden";
-            XSelectGroup.className = "x-element x-select-group text-[#1d1d1d] truncate overflow-hidden text-base p-2 py-1 font-semibold outline-none";
+            XSelectFieldLabel.className = "x-element x-select-field-label text-accent-color text-base";
+            XSelectFieldSingle.className = "x-element x-select-field-single text-black-color text-base";
+            XSelectFieldMultiple.className = "x-element x-select-field-multiple block w-max bg-blue-color text-white-color text-xs p-1 rounded-sm";
+            XSelectTools.className = "x-element x-select-tools border-gray-color flex flex-col border-b p-2 gap-2";
+            XSelectLabel.className = "x-element x-select-label text-black-color text-base text-center font-black leading-[1] lg:hidden";
+            XSelectGroup.className = "x-element x-select-group text-black-color truncate overflow-hidden text-base p-2 py-1 font-semibold outline-none";
             XSelectItem.className =
-                "x-element x-select-item text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer";
+                "x-element x-select-item text-black-color hover:bg-accent-color focus-within:bg-accent-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer";
             XSelectSearch.className =
-                "x-element x-select-search bg-[#f5f5f5] text-[#1d1d1d] border-[#d1d1d1] focus-within:outline-[#66baff] p-2 text-sm border rounded-md focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2";
+                "x-element x-select-search bg-light-color text-black-color border-gray-color focus-within:outline-blue-color p-2 text-sm border rounded-md focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2";
             XSelectSearch.type = "search";
             XSelectSearch.placeholder = DataText.Search;
             XSelectGroup.tabIndex = "-1";
             XSelect.innerHTML = `
-                <x-select-field-container tabindex="0" class="x-element x-select-field-container bg-[#f5f5f5] border-[#d1d1d1] focus-within:outline-[#66baff] flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
+                <x-select-field-container tabindex="0" class="x-element x-select-field-container bg-light-color border-gray-color focus-within:outline-blue-color flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
                     <x-select-field-content class="x-element x-select-field-content w-0 flex-1 overflow-auto no-scrollbar">
                         <x-select-field-text class="x-element x-select-field-text w-max flex items-center gap-2"></x-select-field-text>
                     </x-select-field-content>
                     <x-select-field-icon-wrapper class="x-element x-select-field-icon-wrapper pointer-events-none w-5 h-5 overflow-hidden flex items-center justify-center">
-                        <svg class="x-element x-select-field-icon text-[#1d1d1d] block w-8 h-8 absolute" fill="currentColor" viewBox="0 -960 960 960">
+                        <svg class="x-element x-select-field-icon text-black-color block w-8 h-8 absolute" fill="currentColor" viewBox="0 -960 960 960">
                             <path d="M479.889-343q-8.889 0-17.339-3.545Q454.1-350.091 449-357L250-554q-12-13.25-11.5-32.125T251-618.5q15-14.5 33-13t31 13.5l165 165 166-165q12.5-13 31.75-13.5T710-617.571q14 13.428 13 32.5Q722-566 709-554L512-357q-6.167 6.909-14.694 10.455Q488.778-343 479.889-343Z"/>
                         </svg>
                     </x-select-field-icon-wrapper>
                 </x-select-field-container>
-                <x-select-modal class="x-element x-select-modal bg-[#1d1d1d] lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:min-w-[20rem] lg:mt-1 !hidden z-50">
-                    <x-select-content class="x-element x-select-content bg-[#fcfcfc] border-[#d1d1d1] shadow-[#1d1d1d20] shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
+                <x-select-modal class="x-element x-select-modal bg-black-color lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:min-w-[20rem] lg:mt-1 !hidden z-50">
+                    <x-select-content class="x-element x-select-content bg-white-color border-gray-color shadow-black-color shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
                         <x-select-list class="x-element x-select-list overflow-auto flex-1">
                             <x-select-items class="x-element x-select-items flex flex-col"></x-select-items>
                         </x-select-list>
@@ -1021,8 +1024,8 @@ const x = (function() {
                         item: XSelectItem,
                     },
                     classes: {
-                        disabled: "x-element x-select-item x-select-disabled text-[#1d1d1d] bg-[#4f504b] truncate overflow-hidden text-base p-2 bg-opacity-50 outline-none",
-                        selected: "x-element x-select-item x-select-selected text-[#fcfcfc] bg-[#66baff] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
+                        disabled: "x-element x-select-item x-select-disabled text-black-color bg-disabled truncate overflow-hidden text-base p-2 bg-opacity-50 outline-none",
+                        selected: "x-element x-select-item x-select-selected text-white-color bg-blue-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
                     },
                     data: [],
                     mode: "closed",
@@ -1346,39 +1349,39 @@ const x = (function() {
                 XDatePickerLabel = document.createElement("x-datepicker-label"),
                 XDatePickerDate = document.createElement("x-select-date");
             XDatePicker.className = "x-element x-datepicker lg:relative block";
-            XDatePickerFieldLabel.className = "x-element x-datepicker-field-label text-[#9ca3af] text-base";
-            XDatePickerFieldValue.className = "x-element x-datepicker-field-single text-[#1d1d1d] text-base";
-            XDatePickerTools.className = "x-element x-datepicker-tools border-[#d1d1d1] flex flex-col border-b p-2 gap-2";
-            XDatePickerLabel.className = "x-element x-datepicker-label text-[#1d1d1d] text-base text-center font-black leading-[1] lg:hidden";
+            XDatePickerFieldLabel.className = "x-element x-datepicker-field-label text-accent-color text-base";
+            XDatePickerFieldValue.className = "x-element x-datepicker-field-single text-black-color text-base";
+            XDatePickerTools.className = "x-element x-datepicker-tools border-gray-color flex flex-col border-b p-2 gap-2";
+            XDatePickerLabel.className = "x-element x-datepicker-label text-black-color text-base text-center font-black leading-[1] lg:hidden";
             XDatePickerDate.className =
-                "x-element x-datepicker-date text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] text-center text-base p-1 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer rounded-md";
+                "x-element x-datepicker-date text-black-color hover:bg-accent-color focus-within:bg-accent-color text-center text-base p-1 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer rounded-md";
             XDatePicker.innerHTML = `
-                <x-datepicker-field-container tabindex="0" class="x-element x-datepicker-field-container bg-[#f5f5f5] border-[#d1d1d1] focus-within:outline-[#66baff] flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
+                <x-datepicker-field-container tabindex="0" class="x-element x-datepicker-field-container bg-light-color border-gray-color focus-within:outline-blue-color flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
                     <x-datepicker-field-content class="x-element x-datepicker-field-content w-0 flex-1 overflow-auto no-scrollbar">
                         <x-datepicker-field-text class="x-element x-datepicker-field-text w-max flex items-center gap-2"></x-datepicker-field-text>
                     </x-datepicker-field-content>
-                    <svg class="x-element x-datepicker-field-icon text-[#1d1d1d] block pointer-events-none w-5 h-5" fill="currentColor" viewBox="0 -960 960 960">
+                    <svg class="x-element x-datepicker-field-icon text-black-color block pointer-events-none w-5 h-5" fill="currentColor" viewBox="0 -960 960 960">
                         <path 
                             d="M190-58q-37.175 0-64.088-27.612Q99-113.225 99-149v-601q0-37.588 26.912-64.794Q152.825-842 190-842h59v-22q0-15.375 12.277-27.188Q273.554-903 288.877-903q17.148 0 28.136 11.812Q328-879.375 328-864v22h304v-22q0-15.375 11.577-27.188Q655.154-903 671.377-903q16.648 0 28.136 11.812Q711-879.375 711-864v22h59q37.588 0 64.794 27.206Q862-787.588 862-750v601q0 35.775-27.206 63.388Q807.588-58 770-58H190Zm0-91h580v-419H190v419Zm290.404-246q-18.822 0-32.113-13.177T435-439.877q0-18.523 13.379-31.823t32.2-13.3q18.821 0 31.621 13.177 12.8 13.177 12.8 31.7T512.112-408.3Q499.225-395 480.404-395Zm-160.281 0q-18.523 0-31.823-13.177t-13.3-31.7q0-18.523 13.177-31.823t31.7-13.3q18.523 0 31.823 13.177t13.3 31.7q0 18.523-13.177 31.823t-31.7 13.3Zm319.298 0Q622-395 608.5-408.177t-13.5-31.7q0-18.523 13.588-31.823 13.587-13.3 31.508-13.3 17.922 0 31.413 13.177t13.491 31.7q0 18.523-13.379 31.823t-32.2 13.3ZM480.404-235q-18.822 0-32.113-13.588Q435-262.175 435-280.096q0-17.922 13.379-31.413t32.2-13.491q18.821 0 31.621 13.379 12.8 13.379 12.8 32.2Q525-262 512.112-248.5 499.225-235 480.404-235Zm-160.281 0q-18.523 0-31.823-13.588-13.3-13.587-13.3-31.508 0-17.922 13.177-31.413t31.7-13.491q18.523 0 31.823 13.379t13.3 32.2Q365-262 351.823-248.5t-31.7 13.5Zm319.298 0Q622-235 608.5-248.588 595-262.175 595-280.096q0-17.922 13.588-31.413Q622.175-325 640.096-325q17.922 0 31.413 13.379t13.491 32.2Q685-262 671.621-248.5t-32.2 13.5Z"
                         />
                     </svg>
                 </x-datepicker-field-container>
-                <x-datepicker-modal class="x-element x-datepicker-modal bg-[#1d1d1d] lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:min-w-[20rem] lg:mt-1 !hidden z-50">
-                    <x-datepicker-content class="x-element x-datepicker-content bg-[#fcfcfc] border-[#d1d1d1] shadow-[#1d1d1d20] shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
-                        <x-datepicker-top class="x-element x-datepicker-top border-[#d1d1d1] border-b p-1 flex flex-col gap-1">
+                <x-datepicker-modal class="x-element x-datepicker-modal bg-black-color lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:min-w-[20rem] lg:mt-1 !hidden z-50">
+                    <x-datepicker-content class="x-element x-datepicker-content bg-white-color border-gray-color shadow-black-color shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
+                        <x-datepicker-top class="x-element x-datepicker-top border-gray-color border-b p-1 flex flex-col gap-1">
                             <x-datepicker-controls class="x-element x-datepicker-controls w-full grid grid-rows-1 grid-cols-7 items-center gap-1">
-                                <button type="button" aria-label="button-prev" class="x-element x-datepicker-control x-datepicker-prev text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] flex w-full h-8 items-center justify-center rtl:rotate-180 hover:bg-opacity-50 focus-within:bg-opacity-50 rounded-md outline-none cursor-pointer">
+                                <button type="button" aria-label="button-prev" class="x-element x-datepicker-control x-datepicker-prev text-black-color hover:bg-gray-color focus-within:bg-gray-color flex w-full h-8 items-center justify-center rtl:rotate-180 hover:bg-opacity-50 focus-within:bg-opacity-50 rounded-md outline-none cursor-pointer">
                                     <svg class="x-element x-datepicker-control-icon block pointer-events-none w-8 h-8" fill="currentColor" viewBox="0 -960 960 960">
                                         <path
                                             d="M528-251 331-449q-7-6-10.5-14t-3.5-18q0-9 3.5-17.5T331-513l198-199q13-12 32-12t33 12q13 13 12.5 33T593-646L428-481l166 166q13 13 13 32t-13 32q-14 13-33.5 13T528-251Z"
                                         />
                                     </svg>
                                 </button>
-                                <x-datepicker-display class="x-element x-datepicker-display text-[#1d1d1d] flex items-center justify-center w-full text-lg font-black leading-[1] col-span-5 gap-1">
+                                <x-datepicker-display class="x-element x-datepicker-display text-black-color flex items-center justify-center w-full text-lg font-black leading-[1] col-span-5 gap-1">
                                     <x-datepicker-display-month class="x-element x-datepicker-display-month w-max block"></x-datepicker-display-month>
-                                    <input type="number" class="x-element x-datepicker-display-year focus-within:outline-[#66baff] bg-transparent focus-within:ps-2 w-20 block rounded-md"></input>
+                                    <input type="number" class="x-element x-datepicker-display-year focus-within:outline-blue-color bg-transparent focus-within:ps-2 w-20 block rounded-md"></input>
                                 </x-datepicker-display>
-                                <button type="button" aria-label="button-next" class="x-element x-datepicker-control x-datepicker-next text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] flex w-full h-8 items-center justify-center rtl:rotate-180 hover:bg-opacity-50 focus-within:bg-opacity-50 rounded-md outline-none cursor-pointer">
+                                <button type="button" aria-label="button-next" class="x-element x-datepicker-control x-datepicker-next text-black-color hover:bg-gray-color focus-within:bg-gray-color flex w-full h-8 items-center justify-center rtl:rotate-180 hover:bg-opacity-50 focus-within:bg-opacity-50 rounded-md outline-none cursor-pointer">
                                     <svg class="x-element x-datepicker-control-icon block pointer-events-none w-8 h-8" fill="currentColor" viewBox="0 -960 960 960">
                                         <path
                                             d="M344-251q-14-15-14-33.5t14-31.5l164-165-165-166q-14-12-13.5-32t14.5-33q13-14 31.5-13.5T407-712l199 199q6 6 10 14.5t4 17.5q0 10-4 18t-10 14L408-251q-13 13-32 12.5T344-251Z"
@@ -1387,25 +1390,25 @@ const x = (function() {
                                 </button>
                             </x-datepicker-controls>
                             <x-datepicker-days class="x-element x-datepicker-days w-full grid grid-rows-1 grid-cols-7 items-center gap-1">
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[0], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[1], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[2], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[3], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[4], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[5], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
-                                <x-datepicker-day class="x-element x-datepicker-day text-[#1d1d1d] w-full flex items-center justify-center font-bold text-[.6rem]">
+                                <x-datepicker-day class="x-element x-datepicker-day text-black-color w-full flex items-center justify-center font-bold text-[.6rem]">
                                     ${$string(DataText.Days[6], DatePicker.opts.FullDay)}
                                 </x-datepicker-day>
                             </x-datepicker-days>
@@ -1453,9 +1456,9 @@ const x = (function() {
                         date: XDatePickerDate,
                     },
                     classes: {
-                        disabled: "x-element x-datepicker-date x-datepicker-disabled text-[#1d1d1d] bg-[#4f504b] text-center text-base p-1 bg-opacity-50 outline-none rounded-md opacity-40",
-                        selected: "x-element x-datepicker-date x-datepicker-selected text-[#fcfcfc] bg-[#66baff] text-center text-base p-1 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer rounded-md",
-                        current: "x-element x-datepicker-date x-datepicker-current text-[#1d1d1d] bg-[#d1d1d1] text-center text-base p-1 bg-opacity-50 outline-none cursor-pointer rounded-md",
+                        disabled: "x-element x-datepicker-date x-datepicker-disabled text-black-color bg-disabled text-center text-base p-1 bg-opacity-50 outline-none rounded-md opacity-40",
+                        selected: "x-element x-datepicker-date x-datepicker-selected text-white-color bg-blue-color text-center text-base p-1 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer rounded-md",
+                        current: "x-element x-datepicker-date x-datepicker-current text-black-color bg-gray-color text-center text-base p-1 bg-opacity-50 outline-none cursor-pointer rounded-md",
                     },
                     date: new Date(),
                     disabledDates: getArray(current.getAttribute(Attributes.DisabledDates)),
@@ -1807,36 +1810,36 @@ const x = (function() {
             XDataTable.className = "x-element x-datatable-container flex flex-col gap-4 block";
             XDataTableTools.className = "x-element x-datatable-tools w-full flex items-center gap-4";
             XDataTableSearch.className =
-                "x-element x-datatable-search bg-[#f5f5f5] text-[#1d1d1d] border-[#d1d1d1] focus-within:outline-[#66baff] p-2 w-0 flex-1 lg:flex-none lg:w-80 text-base border rounded-md me-auto focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2";
+                "x-element x-datatable-search bg-light-color text-black-color border-gray-color focus-within:outline-blue-color p-2 w-0 flex-1 lg:flex-none lg:w-80 text-base border rounded-md me-auto focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2";
             XDataTableDownload.className =
-                "x-element x-datatable-download text-[#fcfcfc] border-[#27b380] bg-[#ef4444] hover:bg-[#86efac] focus-within:bg-[#86efac] border rounded-md w-[42px] h-[42px] flex items-center justify-center outline-none";
+                "x-element x-datatable-download text-white-color border-green-dark-color bg-green-dark-color hover:bg-green-light-color focus-within:bg-green-light-color hover:text-black-color focus-within:text-black-color border rounded-md w-[42px] h-[42px] flex items-center justify-center outline-none";
             XDataTablePagination.className = "x-element x-datatable-pagination flex gap-2 items-center justify-center";
             XDataTablePaginationButton.className =
-                "x-element x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
-            XDataTableEmpty.className = "x-element x-datatable-empty text-[#1d1d1d] p-4 text-xl font-black uppercase text-center";
+                "x-element x-datatable-pagination-button text-black-color bg-light-color border-gray-color hover:bg-gray-color focus-within:bg-gray-color border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center";
+            XDataTableEmpty.className = "x-element x-datatable-empty text-black-color p-4 text-xl font-black uppercase text-center";
             XDataTableFilter.className = "x-element x-datatable-filter lg:relative block";
             XDataTableEmpty.innerHTML = DataText.Empty;
             XDataTableFilter.innerHTML = `
-                <x-datatable-filter-field-container tabindex="0" class="x-element x-datatable-filter-field-container bg-[#f5f5f5] border-[#d1d1d1] focus-within:outline-[#66baff] flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
+                <x-datatable-filter-field-container tabindex="0" class="x-element x-datatable-filter-field-container bg-light-color border-gray-color focus-within:outline-blue-color flex flex-wrap items-center gap-2 p-2 rounded-md cursor-pointer border focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2">
                     <x-datatable-filter-field-content class="x-element x-datatable-filter-field-content overflow-auto no-scrollbar">
                         <x-datatable-filter-field-text class="x-element x-datatable-filter-field-text w-max flex items-center gap-2">10</x-datatable-filter-field-text>
                     </x-datatable-filter-field-content>
                     <x-datatable-filter-field-icon-wrapper class="x-element x-datatable-filter-field-icon-wrapper pointer-events-none w-5 h-5 overflow-hidden flex items-center justify-center">
-                        <svg class="x-element x-datatable-filter-field-icon text-[#1d1d1d] block w-8 h-8 absolute" fill="currentColor" viewBox="0 -960 960 960">
+                        <svg class="x-element x-datatable-filter-field-icon text-black-color block w-8 h-8 absolute" fill="currentColor" viewBox="0 -960 960 960">
                             <path d="M479.889-343q-8.889 0-17.339-3.545Q454.1-350.091 449-357L250-554q-12-13.25-11.5-32.125T251-618.5q15-14.5 33-13t31 13.5l165 165 166-165q12.5-13 31.75-13.5T710-617.571q14 13.428 13 32.5Q722-566 709-554L512-357q-6.167 6.909-14.694 10.455Q488.778-343 479.889-343Z"/>
                         </svg>
                     </x-datatable-filter-field-icon-wrapper>
                 </x-datatable-filter-field-container>
-                <x-datatable-filter-modal class="x-element x-datatable-filter-modal bg-[#1d1d1d] lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:mt-1 !hidden z-50">
-                    <x-datatable-filter-content class="x-element x-datatable-filter-content bg-[#fcfcfc] border-[#d1d1d1] shadow-[#1d1d1d20] shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
-                        <x-datatable-filter-tools class="x-element x-datatable-filter-tools border-[#d1d1d1] flex flex-col border-b p-2 gap-2 lg:!hidden">
-                            <x-datatable-filter-label class="x-element x-datatable-filter-label text-[#1d1d1d] text-base text-center font-black leading-[1] lg:hidden">${DataText.Filter}</x-datatable-filter-label>
+                <x-datatable-filter-modal class="x-element x-datatable-filter-modal bg-black-color lg:bg-transparent fixed inset-0 flex flex-col justify-end p-2 bg-opacity-40 backdrop-blur-sm lg:p-0 lg:absolute lg:inset-auto lg:top-full lg:left-0 lg:rtl:left-auto lg:rtl:right-0 lg:w-full lg:mt-1 !hidden z-50">
+                    <x-datatable-filter-content class="x-element x-datatable-filter-content bg-white-color border-gray-color shadow-black-color shadow-sm flex flex-col w-full rounded-md max-h-[70vh] overflow-hidden border lg:max-h-[300px]">
+                        <x-datatable-filter-tools class="x-element x-datatable-filter-tools border-gray-color flex flex-col border-b p-2 gap-2 lg:!hidden">
+                            <x-datatable-filter-label class="x-element x-datatable-filter-label text-black-color text-base text-center font-black leading-[1] lg:hidden">${DataText.Filter}</x-datatable-filter-label>
                         </x-datatable-filter-tools>
                         <x-datatable-filter-list class="x-element x-datatable-filter-list overflow-auto flex-1">
                             <x-datatable-filter-items class="x-element x-datatable-filter-items flex flex-col">
-                                <x-datatable-filter-item tabindex="0" data-value="10" class="x-element x-datatable-filter-item x-datatable-filter-selected text-[#fcfcfc] bg-[#66baff] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">10</x-datatable-filter-item>
-                                <x-datatable-filter-item tabindex="0" data-value="50" class="x-element x-datatable-filter-item text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">50</x-datatable-filter-item>
-                                <x-datatable-filter-item tabindex="0" data-value="100" class="x-element x-datatable-filter-item text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">100</x-datatable-filter-item>
+                                <x-datatable-filter-item tabindex="0" data-value="10" class="x-element x-datatable-filter-item x-datatable-filter-selected text-white-color bg-blue-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">10</x-datatable-filter-item>
+                                <x-datatable-filter-item tabindex="0" data-value="50" class="x-element x-datatable-filter-item text-black-color hover:bg-accent-color focus-within:bg-accent-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">50</x-datatable-filter-item>
+                                <x-datatable-filter-item tabindex="0" data-value="100" class="x-element x-datatable-filter-item text-black-color hover:bg-accent-color focus-within:bg-accent-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer">100</x-datatable-filter-item>
                             </x-datatable-filter-items>
                         </x-datatable-filter-list>
                     </x-datatable-filter-content>
@@ -1850,7 +1853,7 @@ const x = (function() {
             XDataTableSearch.type = "search";
             XDataTableSearch.placeholder = DataText.Search;
             XDataTable.innerHTML = `
-                <div class="x-element x-datatable-content bg-[#f5f5f5] border-[#d1d1d1] border rounded-md w-full overflow-auto">
+                <div class="x-element x-datatable-content bg-light-color border-gray-color border rounded-md w-full overflow-auto">
                     <table class="x-element x-datatable-table w-max min-w-full">
                         <thead class="x-element x-datatable-head">
                             <tr class="x-element x-datatable-head-row"></tr>
@@ -1887,13 +1890,13 @@ const x = (function() {
                         empty: XDataTableEmpty,
                     },
                     classes: {
-                        btn: "x-element x-datatable-pagination-button text-[#1d1d1d] bg-[#f5f5f5] border-[#d1d1d1] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
-                        selected: "x-element x-datatable-pagination-button x-datatable-pagination-selected text-[#fcfcfc] bg-[#66baff] border-[#d1d1d1] border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
-                        filterSelected: "x-element x-datatable-filter-item x-datatable-filter-selected text-[#fcfcfc] bg-[#66baff] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
-                        filterBase: "x-element x-datatable-filter-item text-[#1d1d1d] hover:bg-[#d1d1d1] focus-within:bg-[#d1d1d1] truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
-                        headCol: "x-element x-datatable-head-col max-w-[300px] truncate text-ellipsis overflow-hidden text-[#1d1d1d] text-sm font-black p-2",
-                        bodyRow: "x-element x-datatable-body-row border-[#d1d1d1] border-t",
-                        bodyCol: "x-element x-datatable-body-col max-w-[300px] truncate text-ellipsis overflow-hidden text-[#1d1d1d] text-base p-2",
+                        btn: "x-element x-datatable-pagination-button text-black-color bg-light-color border-gray-color hover:bg-gray-color focus-within:bg-gray-color border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
+                        selected: "x-element x-datatable-pagination-button x-datatable-pagination-selected text-white-color bg-blue-color border-gray-color border outline-none w-[36px] h-[36px] rounded-md text-xs font-black flex items-center justify-center",
+                        filterSelected: "x-element x-datatable-filter-item x-datatable-filter-selected text-white-color bg-blue-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
+                        filterBase: "x-element x-datatable-filter-item text-black-color hover:bg-accent-color focus-within:bg-accent-color truncate overflow-hidden text-base p-2 hover:bg-opacity-50 focus-within:bg-opacity-50 outline-none cursor-pointer",
+                        headCol: "x-element x-datatable-head-col max-w-[300px] truncate text-ellipsis overflow-hidden text-black-color text-sm font-black p-2",
+                        bodyRow: "x-element x-datatable-body-row border-gray-color border-t",
+                        bodyCol: "x-element x-datatable-body-col max-w-[300px] truncate text-ellipsis overflow-hidden text-black-color text-base p-2",
                     },
                     len: current.tHead.querySelector("tr").children.length,
                     row: 10,
@@ -2146,7 +2149,7 @@ const x = (function() {
             `;
             XUploaderItem.innerHTML = `
                 <img class="x-element x-uploader-image w-full h-full object-contain pointer-events-none transition-transform group-hover:scale-150" />
-                <div class="x-element bg-[#1d1d1d] text-[#fcfcfc] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity w-full h-full absolute inset-0 bg-opacity-50 flex items-center justify-center">
+                <div class="x-element bg-black-color text-white-color opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity w-full h-full absolute inset-0 bg-opacity-50 flex items-center justify-center">
                     <svg fill="currentcolor" viewBox="0 96 960 960">
                         <path
                             d="m480 647 88 88q10.733 12 28.367 12 17.633 0 30.459-11.826Q638 724 638 706.25T627 677l-88-89 88-90q11-11.733 11-29.367 0-17.633-11.174-28.459Q615 429 597.367 428.5 579.733 428 569 440l-89 89-87-89q-10.5-12-28.75-11.5t-30.424 11.674Q322 452 322 469.133q0 17.134 12 28.867l88 90-88 88q-11 12.5-11 29.75t10.826 29.424Q346 747 363.75 747T393 735l87-88ZM253 957q-35.725 0-63.863-27.138Q161 902.725 161 866V314h-11q-19 0-31.5-12.5T106 268q0-19 12.5-32t31.5-13h182q0-20 13-33.5t33-13.5h204q20 0 33.5 13.3T629 223h180q20 0 33 13t13 32q0 21-13 33.5T809 314h-11v552q0 36.725-27.638 63.862Q742.725 957 706 957H253Z" />
@@ -2170,15 +2173,15 @@ const x = (function() {
                     },
                     classes: {
                         multiple: {
-                            wrapper: "x-element x-uploader bg-[#f5f5f5] border-[#d1d1d1] p-2 rounded-md border grid grid-cols-2 grid-rows-1 lg:grid-cols-6 gap-2",
-                            trigger: "x-element x-uploader-trigger bg-[#d1d1d1] text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
-                            item: "x-element x-uploader-item w-full group aspect-square bg-[#d1d1d1] bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden",
+                            wrapper: "x-element x-uploader bg-light-color border-gray-color p-2 rounded-md border grid grid-cols-2 grid-rows-1 lg:grid-cols-6 gap-2",
+                            trigger: "x-element x-uploader-trigger bg-gray-color text-black-color w-full aspect-square bg-opacity-50 hover:bg-opacity-100 focus:bg-opacity-100 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
+                            item: "x-element x-uploader-item w-full group aspect-square bg-gray-color bg-opacity-50 rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden",
                             svg: "x-element block w-16 h-16 pointer-events-none",
                         },
                         single: {
-                            wrapper: "x-element x-uploader bg-[#f5f5f5] border-[#d1d1d1] rounded-md border",
-                            trigger: "x-element x-uploader-trigger text-[#1d1d1d] w-full aspect-square bg-opacity-50 hover:!bg-[#d1d1d1] hover:bg-opacity-80 focus:!bg-[#d1d1d1] focus:bg-opacity-80 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
-                            item: "x-element x-uploader-item w-full group aspect-square bg-[#f5f5f5] rounded-md flex items-center justify-center cursor-pointer overflow-hidden absolute inset-0",
+                            wrapper: "x-element x-uploader bg-light-color border-gray-color rounded-md border",
+                            trigger: "x-element x-uploader-trigger bg-gray-color text-black-color w-full aspect-square bg-opacity-0 hover:bg-opacity-100 focus:bg-opacity-100 rounded-md lg:rounded-md flex items-center justify-center relative overflow-hidden",
+                            item: "x-element x-uploader-item w-full group aspect-square bg-light-color rounded-md flex items-center justify-center cursor-pointer overflow-hidden absolute inset-0",
                             svg: "x-element block w-20 h-20 pointer-events-none",
                         },
                         css: ["absolute", "inset-0"],
