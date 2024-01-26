@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+:root {
+    /** */
+    --prime: 136 77 242;
+    --acent: 191 160 248;
+    /** */
+    --black: 29 29 29;
+    --white: 252 252 252;
+    --light: 245 245 245;
+    --shade: 209 209 209;
+    --r-thin: 4px;
+    --r-huge: 6px;
+    --w-thin: 600;
+    --w-huge: 800;
+    --shadow: 0px 10px 10px -12px rgb(var(--black) / .2);
+    /** */
+    --color-sys-0: #94A3B8;
+    --color-sys-1: #78716C;
+    --color-sys-2: #1F2937;
+    /** */
+    --color-0: #3B82F6;
+    --color-1: #8B5CF6;
+    --color-2: #06B6D4;
+    --color-3: #22C55E;
+    --color-4: #EAB308;
+    --color-5: #EC4899;
+    --color-6: #EF4444;
+    --color-7: #14B8A6;
+    --color-8: #F97316;
+    --color-9: #F43F5E;
+}
+
+*,
+*::after,
+*::before {
+    font-family: Montserrat, sans-serif;
+}
+
+html[lang="ar"] *,
+html[lang="ar"] *::after,
+html[lang="ar"] *::before {
+    font-family: 'Cairo', sans-serif;
+}
+
+os-text,
+os-area,
+os-date,
+os-select,
+os-search,
+os-password,
+os-switch::part(toggle) {
+    background: transparent;
+    border: 1px solid rgb(var(--black));
+}
+
+os-text,
+os-area,
+os-date,
+os-select,
+os-switch,
+os-search,
+os-password,
+os-password::part(trigger) {
+    outline-color: rgb(var(--prime));
+}
+
+os-button:not([outlined]),
+os-topbar:not([transparent]) {
+    background-color: rgb(var(--prime));
+}
+
+os-button {
+    border: 1px solid rgb(var(--prime));
+}
+
+os-button:hover,
+os-button:focus,
+os-button:focus-within {
+    border-color: rgb(var(--prime) / .4);
+    background-color: rgb(var(--prime) / .4);
+}
+
+os-text,
+os-area,
+os-date,
+os-toast,
+os-select,
+os-search,
+os-password,
+os-date::part(content),
+os-modal::part(content),
+os-select::part(content),
+os-dropdown::part(content) {
+    border-radius: var(--r-thin);
+}
+
+os-date::part(content),
+os-modal::part(content),
+os-select::part(content),
+os-navbar::part(content),
+os-dropdown::part(content) {
+    box-shadow: var(--shadow);
+}
+
+os-switch::part(ground) {
+    border-color: rgb(var(--black));
+}
+
+os-switch:not([checked])::part(ground) {
+    background: transparent;
+}
+
+os-switch::part(toggle) {
+    background: #ffffff;
+}
+
+@media (min-width: 1024px) {
+    os-dropdown.W200::part(modal) {
+        min-width: 140px;
+    }
+}

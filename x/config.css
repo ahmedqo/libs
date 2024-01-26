@@ -1,0 +1,17 @@
+.no-scrollbar::-webkit-scrollbar {
+    -webkit-appearance: none;
+    background: transparent;
+    -moz-appearance: none;
+    appearance: none;
+    display: none;
+    width: 0;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

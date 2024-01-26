@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+        }
+        
+        #wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: red;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        
+        .row {
+            flex-direction: column;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        #con {
+            max-width: 1200px;
+            margin: auto;
+            width: 100%;
+        }
+        
+        #content {
+            padding: 1rem;
+        }
+        
+        os-text,
+        os-area,
+        os-date,
+        os-time,
+        os-filler,
+        os-filter,
+        os-select,
+        os-password,
+        os-select::part(search),
+        os-switch::part(toggle),
+        os-datatable::part(search) {
+            background: transparent;
+            border-color: #1d1d1d;
+        }
+        
+        os-text,
+        os-area,
+        os-date,
+        os-toast,
+        os-select,
+        os-filler,
+        os-filter,
+        os-password,
+        os-date::part(content),
+        os-time::part(content),
+        os-select::part(search),
+        os-modal::part(content),
+        os-select::part(content),
+        os-filler::part(content),
+        os-dropdown::part(content),
+        os-datatable::part(search) {
+            border-radius: 0.3rem;
+        }
+        
+        os-switch::part(ground) {
+            border-color: #1d1d1d;
+        }
+        
+        os-switch:not([checked])::part(ground) {
+            background: transparent;
+        }
+        
+        os-switch::part(toggle) {
+            background: #ffffff;
+        }
+        
+        os-text::part(field),
+        os-area::part(field),
+        os-date::part(field),
+        os-time::part(field),
+        os-select::part(field),
+        os-filler::part(field),
+        os-filter::part(field),
+        os-password::part(field) {
+            color: #1d1d1d;
+        }
+        
+        os-text::part(label),
+        os-area::part(label),
+        os-date::part(label),
+        os-time::part(label),
+        os-select::part(label),
+        os-filler::part(label),
+        os-filter::part(label),
+        os-password::part(label) {
+            font-weight: 600;
+        }
+        
+        os-select:not([multiple])::part(items) {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr;
+            gap: 0.25rem;
+            padding: 0.25rem;
+        }
+        
+        os-select:not([multiple]) os-option {
+            padding: 0.25rem;
+        }
+        
+        os-select:not([multiple]) os-option img {
+            display: block;
+            background: bisque;
+            aspect-ratio: 1/1;
+            width: 100%;
+        }
+        
+        os-button {
+            width: 100%;
+        }
+        
+        @media (min-width: 1024px) {
+            .row {
+                flex-direction: row;
+            }
+            .row> :not(os-switch) {
+                width: calc(50% - 0.75rem);
+            }
+        }
+    </style>
+</head>
+
+<body style="overflow: hidden; height: 100dvh;">
+    <div id="wrap"></div>
+    <os-wrapper style="display: flex;">
+        <os-sidebar style="flex: none;">
+            hello world
+        </os-sidebar>
+        <div id="con">
+            <os-topbar transparent align="space-between" style="width: 100%; flex: none;">
+                <div class="row" style="flex-direction: row; gap: 0.5rem;">
+                    <os-button style="width: max-content;" onclick="menu('nav')" type="button" outlined>
+                        <svg style="width: 1.4rem; height: 1.4rem; display: block;" fill="currentcolor" viewBox="0 -960 960 960">
+								<path
+									d="M129-215q-20.75 0-33.375-12.675Q83-240.351 83-261.175 83-280 95.625-293T129-306h458q19.75 0 32.375 13.175 12.625 13.176 12.625 32Q632-240 619.375-227.5 606.75-215 587-215H129Zm0-221q-20.75 0-33.375-13.175Q83-462.351 83-482.175 83-502 95.625-514.5 108.25-527 129-527h339q18.75 0 31.875 12.675Q513-501.649 513-481.825 513-462 499.875-449 486.75-436 468-436H129Zm0-218q-20.75 0-33.375-13.175Q83-680.351 83-700.175 83-720 95.625-733 108.25-746 129-746h458q19.75 0 32.375 13.175 12.625 13.176 12.625 33Q632-680 619.375-667 606.75-654 587-654H129Zm605 173 114 113q13 14 12.5 33T847-304q-15 14-33.5 14T782-304L637-450q-14-13-14-31t14-32l145-146q13-13 31.5-13t33.5 13q13 14 12.5 33T847-594L734-481Z"
+								/>
+							</svg>
+                    </os-button>
+                    <os-button style="width: max-content; transform: rotate(90deg);" onclick="menu('modal')" type="button" outlined>
+                        <svg style="width: 1.4rem; height: 1.4rem; display: block;" fill="currentcolor" viewBox="0 -960 960 960">
+								<path
+									d="M129-215q-20.75 0-33.375-12.675Q83-240.351 83-261.175 83-280 95.625-293T129-306h458q19.75 0 32.375 13.175 12.625 13.176 12.625 32Q632-240 619.375-227.5 606.75-215 587-215H129Zm0-221q-20.75 0-33.375-13.175Q83-462.351 83-482.175 83-502 95.625-514.5 108.25-527 129-527h339q18.75 0 31.875 12.675Q513-501.649 513-481.825 513-462 499.875-449 486.75-436 468-436H129Zm0-218q-20.75 0-33.375-13.175Q83-680.351 83-700.175 83-720 95.625-733 108.25-746 129-746h458q19.75 0 32.375 13.175 12.625 13.176 12.625 33Q632-680 619.375-667 606.75-654 587-654H129Zm605 173 114 113q13 14 12.5 33T847-304q-15 14-33.5 14T782-304L637-450q-14-13-14-31t14-32l145-146q13-13 31.5-13t33.5 13q13 14 12.5 33T847-594L734-481Z"
+								/>
+							</svg>
+                    </os-button>
+                    <os-dropdown pos="start" position="start" label="Test Label">
+                        <os-button slot="trigger" style="width: max-content; transform: rotate(270deg);" type="button" outlined>
+                            <svg style="width: 1.4rem; height: 1.4rem; display: block;" fill="currentcolor" viewBox="0 -960 960 960">
+									<path
+										d="M129-215q-20.75 0-33.375-12.675Q83-240.351 83-261.175 83-280 95.625-293T129-306h458q19.75 0 32.375 13.175 12.625 13.176 12.625 32Q632-240 619.375-227.5 606.75-215 587-215H129Zm0-221q-20.75 0-33.375-13.175Q83-462.351 83-482.175 83-502 95.625-514.5 108.25-527 129-527h339q18.75 0 31.875 12.675Q513-501.649 513-481.825 513-462 499.875-449 486.75-436 468-436H129Zm0-218q-20.75 0-33.375-13.175Q83-680.351 83-700.175 83-720 95.625-733 108.25-746 129-746h458q19.75 0 32.375 13.175 12.625 13.176 12.625 33Q632-680 619.375-667 606.75-654 587-654H129Zm605 173 114 113q13 14 12.5 33T847-304q-15 14-33.5 14T782-304L637-450q-14-13-14-31t14-32l145-146q13-13 31.5-13t33.5 13q13 14 12.5 33T847-594L734-481Z"
+									/>
+								</svg>
+                        </os-button>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                            ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor
+                            deserunt, neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum
+                            itaque. Aperiam, cum.
+                        </p>
+                    </os-dropdown>
+                </div>
+                <div class="row" style="flex-direction: row; gap: 0.5rem;">
+                    <os-button style="width: max-content;" onclick="fn()" type="button" outlined>
+                        <svg style="width: 1.4rem; height: 1.4rem; display: block;" fill="currentcolor" viewBox="0 -960 960 960">
+								<path
+									d="M408-59q-18 0-31-10.5T363-98l-15-94q-14-4-31-14t-28-19l-86 41q-15 6-32.5 1.5T144-204L72-332q-10-16-5-32.5T85-391l80-59q-1-5-1-14.5v-30q0-8.5 1-15.5l-81-58q-13-11-17.5-27.5T72-628l72-127q9-16 26.5-21t32.5 0l88 41q10-7 27-17t30-14l15-98q1-16 14.5-27t31.5-11h143q17 0 30.5 11t15.5 27l14 97q15 4 31.5 14t27.5 18l86-41q15-5 32.5 0t26.5 21l73 126q9 16 5 33t-19 28l-81 55q1 8 2.5 17t1.5 16q0 7-1.5 15.5T794-449l81 58q13 10 18.5 26.5T890-332l-74 128q-10 17-27 21.5t-32-1.5l-86-41q-11 9-28.5 19.5T613-192l-15 94q-2 18-15 28.5T552-59H408Zm71-294q53 0 90-37t37-90q0-52-37-89.5T479-607q-54 0-90.5 37.5T352-480q0 53 36.5 90t90.5 37Z"
+								/>
+							</svg>
+                    </os-button>
+                    <os-button style="width: max-content; transform: rotate(180deg);" onclick="menu('fixed')" type="button" outlined>
+                        <svg style="width: 1.4rem; height: 1.4rem; display: block;" fill="currentcolor" viewBox="0 -960 960 960">
+								<path
+									d="M129-215q-20.75 0-33.375-12.675Q83-240.351 83-261.175 83-280 95.625-293T129-306h458q19.75 0 32.375 13.175 12.625 13.176 12.625 32Q632-240 619.375-227.5 606.75-215 587-215H129Zm0-221q-20.75 0-33.375-13.175Q83-462.351 83-482.175 83-502 95.625-514.5 108.25-527 129-527h339q18.75 0 31.875 12.675Q513-501.649 513-481.825 513-462 499.875-449 486.75-436 468-436H129Zm0-218q-20.75 0-33.375-13.175Q83-680.351 83-700.175 83-720 95.625-733 108.25-746 129-746h458q19.75 0 32.375 13.175 12.625 13.176 12.625 33Q632-680 619.375-667 606.75-654 587-654H129Zm605 173 114 113q13 14 12.5 33T847-304q-15 14-33.5 14T782-304L637-450q-14-13-14-31t14-32l145-146q13-13 31.5-13t33.5 13q13 14 12.5 33T847-594L734-481Z"
+								/>
+							</svg>
+                    </os-button>
+                </div>
+            </os-topbar>
+            <div id="content">
+                <form action="/index.html">
+                    <os-filler set-query="name" set-value="value" id="filler" label="Username" name="filler" query="hello" value="10"></os-filler>
+                    <div class="row">
+                        <os-text label="Username" name="username" value="ahmedqo"></os-text>
+                        <os-password label="Password" name="password" value="password"></os-password>
+                    </div>
+                    <os-area label="Description" name="area" value="hello world"></os-area>
+                    <div class="row">
+                        <os-select label="Single Select" name="select:1">
+                            <os-option value="100" text="me 1">
+                                <img />
+                            </os-option>
+                            <os-option value="200" text="me 2">
+                                <img />
+                            </os-option>
+                            <os-option value="300" text="me 3" selected>
+                                <img />
+                            </os-option>
+                            <os-option value="400" text="me 4">
+                                <img />
+                            </os-option>
+                            <os-option value="500" text="me 5">
+                                <img />
+                            </os-option>
+                        </os-select>
+                        <os-select search multiple label="Multiple Select" name="select:2">
+                            <os-option value="100">Option 1</os-option>
+                            <os-option value="200">Option 2</os-option>
+                            <os-option value="300" selected>Option 3</os-option>
+                            <os-option value="400">Option 4</os-option>
+                            <os-option value="500">Option 5</os-option>
+                            <os-option value="600" selected>Option 6</os-option>
+                            <os-option value="700">Option 7</os-option>
+                            <os-option value="800">Option 8</os-option>
+                            <os-option value="900">Option 9</os-option>
+                        </os-select>
+                    </div>
+                    <div class="row">
+                        <os-date value="#now" full-day="3" year-range="2100, 2000" format="dddd dd mmmm yyyy" label="Date" name="date"></os-date>
+                        <os-time label="Time" name="time" value="10:20" format="hh:mm aa"></os-time>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem;">
+                        <os-switch role="radio" name="sex" group="sex" value="male" checked>Male</os-switch>
+                        <os-switch role="radio" name="sex" group="sex" value="female">Female</os-switch>
+                    </div>
+                    <div class="row">
+                        <os-button type="submit" style="z-index: 100;">
+                            Submit
+                        </os-button>
+                        <os-button outlined type="reset" style="z-index: 100;">
+                            Reset
+                        </os-button>
+                    </div>
+                    <os-filter label="Search Paragraphs" target=".p"></os-filter>
+                </form>
+                <p class="p">
+                    Lorem ipsum dolor 100 sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                    ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                    neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+                </p>
+                <p class="p">
+                    Lorem ipsum dolor sit amet 200 consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                    ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                    neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+                </p>
+                <p class="p">
+                    Lorem ipsum dolor sit amet 300 consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                    ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                    neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+                </p>
+                <p class="p">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                    ut delectus, animi natus 400 voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor
+                    deserunt, neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque.
+                    Aperiam, cum.
+                </p>
+                <os-datatable print search filter download id="data" title="Test Table">
+                    <div slot="print-header">hello tool start</div>
+                    <div slot="print-footer">hello tool end</div>
+                    <div slot="print-main-start">hello tool start</div>
+                    <div slot="print-main-end">hello tool end</div>
+                </os-datatable>
+            </div>
+        </div>
+        <os-modal label="Test label">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eum molestias quia sit adipisci ipsa nobis laborum sint officiis quibusdam doloribus delectus, repellat repellendus eius. Dolore ipsa sapiente et consequatur omnis harum tempora id nobis,
+                ut delectus, animi natus voluptatem culpa facere rerum quia odio eligendi recusandae dolores tenetur quos amet laudantium. Delectus iure alias voluptatibus modi et voluptatum ad veritatis aut nemo magnam odit cumque qui, dolor deserunt,
+                neque distinctio mollitia beatae sint laudantium. Nemo aspernatur placeat tempora itaque tenetur animi dicta vel, libero voluptatem hic fuga quam necessitatibus modi reiciendis impedit? Nam nisi repellendus illum itaque. Aperiam, cum.
+            </p>
+        </os-modal>
+        <os-sidebar fixed position="end">
+            hello world
+        </os-sidebar>
+        <os-toaster horisontal="end" vertical="start"></os-toaster>
+    </os-wrapper>
+
+    <!-- <script src="./public/js/os.js?dropdown"></script> -->
+    <script src="./public/js/os/base.js"></script>
+    <script src="./public/js/os/comp.js"></script>
+    <script src="./public/js/os/form.js"></script>
+    <script>
+        const fn = () => {
+            const ar = ["info", "success", "error", "warning"];
+            OS.$Toaster.Toast("hello there", ar[Math.floor(Math.random() * ar.length)]);
+        };
+
+        function menu(type) {
+            type === "nav" && document.querySelector("os-sidebar").toggle();
+            type === "fixed" && document.querySelectorAll("os-sidebar")[1].toggle();
+            type === "modal" && document.querySelector("os-modal").show();
+        }
+        requestAnimationFrame(fn);
+        OS.$Load(() => {
+            document.querySelector("#wrap").remove();
+            document.body.removeAttribute("style");
+        });
+        const f = document.querySelector("form");
+        f.addEventListener("submit", (e) => {
+            e.preventDefault();
+            var dd = {};
+            var fd = new FormData(f);
+            for ([k, v] of fd.entries()) {
+                dd[k] = dd[k] ? [...(Array.isArray(dd[k]) ? dd[k] : [dd[k]]), v] : v;
+            }
+            console.table(dd);
+            alert(JSON.stringify(dd));
+        });
+
+        const filler = document.querySelector("#filler");
+
+        filler.addEventListener("input", (e) => {
+            filler.results = filler.query.trim() ?
+                [{
+                    name: "ahmed",
+                    value: 100,
+                }, {
+                    name: "1000",
+                    value: 200,
+                }, {
+                    name: "200",
+                    value: 300,
+                }, ] :
+                [];
+        });
+
+        filler.addEventListener("select", (e) => {
+            console.log(e.detail.data);
+        });
+
+        const data = document.querySelector("#data");
+        data.cols = [{
+            name: "first_name",
+            text: "First Name",
+        }, {
+            name: "last_name",
+            text: "Last Name",
+        }, {
+            name: "action",
+            text: "Action",
+            visible: false,
+            render: (row) => {
+                return `<div>${row.id}</div>`;
+            },
+        }, ];
+        data.rows = [{
+            id: 10,
+            first_name: "Ahmed",
+            last_name: "qo",
+        }, {
+            id: 20,
+            first_name: "Ahmed",
+            last_name: "qo100",
+        }, ];
+    </script>
+</body>
+
+</html>
