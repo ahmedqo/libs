@@ -1260,29 +1260,29 @@ OS.$Component.Datatable = (function() {
             }
         ($ endif $)
 
-        ($ if @state.show $)
-            ::-webkit-scrollbar {
-                -webkit-appearance: none;
-                background: transparent;
-                -moz-appearance: none;
-                appearance: none;
-                height: 5px;
-                width: 5px;
-            }
-            
-            ::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            
-            ::-webkit-scrollbar-thumb {
-                border-radius: 2px; 
-                background: {{ @theme.colors("GRAY", 300) }};
-            }
-            
-            ::-webkit-scrollbar-thumb:hover {
-                background: {{ @theme.colors("GRAY", 400) }};
-            }
+        ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            background: transparent;
+            -moz-appearance: none;
+            appearance: none;
+            height: 5px;
+            width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            border-radius: 2px; 
+            background: {{ @theme.colors("GRAY", 300) }};
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: {{ @theme.colors("GRAY", 400) }};
+        }
 
+        ($ if @state.show $)
             [part="modal"] {
                 inset: 0;
                 width: 100%;
